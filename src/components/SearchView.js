@@ -6,7 +6,11 @@ class SearchView extends Component {
     constructor() {
         super();
         this.state = {
-            searchCriteria: '',
+            searchCriteria: {
+                cityName: '',
+                checkInDate: '',
+                checkOutDate: ''
+            },
             searchResults: {}
         }
         this.handleChange = this.handleChange.bind(this);
@@ -14,23 +18,35 @@ class SearchView extends Component {
     }
 
     search() {
-        console.log(this.state.searchCriteria);
-        browserHistory.push('/results/');
+        const criteria = this.state.searchCriteria;
+        const resultsRoute = '/results/' + criteria.cityName + '/' + criteria.checkInDate + '/' + criteria.checkOutDate
+        this.props.history.push(resultsRoute);
     }
 
     handleChange(event) {
-        this.setState({searchCriteria: event.target.value});
+        const target = event.target;
+        const name = target.name;
+        let prevState = this.state.searchCriteria;
+        prevState[name] = target.value;
+        this.setState({
+            searchCriteria: prevState
+        });
+        console.log(this.state.searchCriteria);
     }
 
     render() {
         return (
             <div className="searchBar">
                 <h1>Search View</h1>
-                <input type="text" value={this.state.searchCriteria} onChange={this.handleChange} />
+                <ul>
+                    <input type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange} />
+                    <input type="text" name="checkInDate" value={this.state.searchCriteria.checkInDate} onChange={this.handleChange} />
+                    <input type="text" name="checkOutDate" value={this.state.searchCriteria.checkOutDate} onChange={this.handleChange} />
+                </ul>
                 <button className="searchButton" onClick={() => this.search()}>Search</button>
             </div>
         )
     }
 }
 
-export default SearchView
+export default withRouter(SearchView)
