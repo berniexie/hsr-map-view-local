@@ -23,7 +23,7 @@ export class Container extends React.Component {
     render() {
         return (
             <div className='map-container'>
-                <Map google={this.props.google}>
+                <Map google={this.props.google} city={this.props.city}>
                     {this.createMarkerReactComponents()}
                 </Map>
             </div>
@@ -33,5 +33,6 @@ export class Container extends React.Component {
 
 //this needs to be refactored
 export default GoogleApiComponent({
-    apiKey: 'AIzaSyB6A_FPXPxidc3vWP-Z5eEXddcNrti4iVM'
+    apiKey : 'AIzaSyAvHEM53jt2i4y-VRiibELAcBVKkLMAKds'
+    //apiKey: 'AIzaSyB6A_FPXPxidc3vWP-Z5eEXddcNrti4iVM'
 })(Container)
