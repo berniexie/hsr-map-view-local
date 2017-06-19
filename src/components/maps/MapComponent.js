@@ -7,6 +7,7 @@ class MapComponent extends Component {
         super(props);
         this.state = {
             region: props.regionName,
+            currentLocation: '',
             mapPinObjects: [],
             mapPinToRender: []
         }
@@ -24,7 +25,7 @@ class MapComponent extends Component {
     }
 
     onPanZoom() {
-        console.log('hi');
+        console.log('within the function onPanZoom');
         // this.props.onMove(this.map);
     }
 
@@ -52,7 +53,22 @@ class MapComponent extends Component {
             this.map.addListener('idle', (evt) => {
                 this.onPanZoom();
             })
+            this.forceUpdate();
         }
+    }
+
+    renderChildren() {
+        const {children} = this.props;
+        if (!children) return;
+
+        return React.Children.map(children, c => {
+            return React.cloneElement(c, {
+                map: this.map,
+                google: this.props.google,
+                mapCenter: this.state.currentLocation,
+                region: this.props.regionName
+            });
+        })
     }
 
     render() {
@@ -63,6 +79,7 @@ class MapComponent extends Component {
         return (
             <div ref='map' style={style}>
                 Loading map...
+                {this.renderChildren()}
             </div>
         )
     }

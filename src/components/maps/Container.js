@@ -1,6 +1,7 @@
 import React from 'react'
 import GoogleApiComponent from './GoogleApiComponent'
-import MapComponent from './MapComponent'
+import Map from './MapComponent'
+import Marker from './MarkerComponent'
 
 export class Container extends React.Component {
     render() {
@@ -8,10 +9,12 @@ export class Container extends React.Component {
             width: '100vw',
             height: '50vh'
         }
+        const pos = {lat: 37.759703, lng: -122.428093}
         return (
             <div style={style}>
-                <MapComponent google={this.props.google}
-                />
+                <Map google={this.props.google}>
+                    <Marker position={pos}/>
+                </Map>
             </div>
         )
     }
