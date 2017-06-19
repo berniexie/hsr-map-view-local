@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import axios from 'axios'
 
 class MapComponent extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            region: props.regionName,
+            mapPinObjects: [],
+            mapPinToRender: []
+        }
         this.loadMap = this.loadMap.bind(this);
     }
 
@@ -17,6 +23,11 @@ class MapComponent extends Component {
         this.loadMap();
     }
 
+    onPanZoom() {
+        console.log('hi');
+        // this.props.onMove(this.map);
+    }
+
     loadMap() {
         if (this.props && this.props.google) {
             // google is available
@@ -26,6 +37,7 @@ class MapComponent extends Component {
             const mapRef = this.refs.map;
             const node = ReactDOM.findDOMNode(mapRef);
 
+            //default stuff
             let zoom = 14;
             let lat = 37.774929;
             let lng = -122.419416;
@@ -34,7 +46,12 @@ class MapComponent extends Component {
                 center: center,
                 zoom: zoom
             });
+
+            //setting the actual map
             this.map = new maps.Map(node, mapConfig);
+            this.map.addListener('idle', (evt) => {
+                this.onPanZoom();
+            })
         }
     }
 
