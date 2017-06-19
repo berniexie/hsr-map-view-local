@@ -14,7 +14,7 @@ class ResultsView extends Component {
 	}
 
     render() {
-        return <div>
+        return <div className='results-view'>
             <h1>Results View</h1>
             <MapContainer/>
             <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel}/>

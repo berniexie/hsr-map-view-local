@@ -38,7 +38,7 @@ class SearchView extends Component {
 
     render() {
         return (
-            <div className="searchBar">
+            <div className="search-bar">
                 <h1>Search View</h1>
                 <ul>
                     <input type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange} />
