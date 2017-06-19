@@ -38,9 +38,10 @@ class MapComponent extends Component {
 
             //default stuff
             let zoom = 14;
-            let lat = 37.774929;
-            let lng = -122.419416;
-            const center = new maps.LatLng(lat, lng);
+            let lat = 0.0;
+            let lng = 0.0;
+            var center = new maps.LatLng(lat, lng);
+
             const mapConfig = Object.assign({}, {
                 center: center,
                 zoom: zoom
@@ -51,6 +52,19 @@ class MapComponent extends Component {
             this.map.addListener('idle', (evt) => {
                 this.onPanZoom();
             })
+
+                        //Getting location from request
+            var geocoder = new google.maps.Geocoder();
+            var map = this.map;
+            geocoder.geocode({'address' : this.props.city}, function(results, status){
+                if (status == 'OK'){
+                    map.setCenter(results[0].geometry.location);
+                }
+                else{
+                    alert("Google maps failed to find your location.");
+                }
+            });
+
             this.forceUpdate();
         }
     }

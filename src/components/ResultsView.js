@@ -16,7 +16,7 @@ class ResultsView extends Component {
     render() {
         return <div className='results-view'>
             <h1>Results View</h1>
-            <MapContainer/>
+            <MapContainer city={this.props.match.params.cityName}/>
             <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel}/>
         </div>
     }
