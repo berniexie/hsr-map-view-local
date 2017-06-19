@@ -7,10 +7,8 @@ class MapComponent extends Component {
         super(props);
         this.state = {
             region: props.regionName,
-            currentLocation: '',
-            mapPinObjects: [],
-            mapPinToRender: []
-        }
+            currentLocation: ''
+        };
         this.loadMap = this.loadMap.bind(this);
     }
 
@@ -72,12 +70,8 @@ class MapComponent extends Component {
     }
 
     render() {
-        const style = {
-            width: '100vw',
-            height: '50vh'
-        }
         return (
-            <div ref='map' style={style}>
+            <div className='map-component' ref='map'>
                 Loading map...
                 {this.renderChildren()}
             </div>
