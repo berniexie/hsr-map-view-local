@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
+import GoogleAPIComponent from "./Container"
 
 class MapComponent extends Component {
     constructor(props) {
@@ -37,6 +38,10 @@ class MapComponent extends Component {
             const mapRef = this.refs.map;
             const node = ReactDOM.findDOMNode(mapRef);
 
+            console.log("HEREEEEEEEE");
+            axios.get('/').then(function(request){
+                console.log(request.request);
+            });
             //default stuff
             let zoom = 14;
             let lat = 37.774929;

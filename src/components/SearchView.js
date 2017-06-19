@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {withRouter} from "react-router-dom";
+import GoogleAPIComponent from "./maps/Container"
 
 class SearchView extends Component {
     constructor() {
@@ -18,8 +19,10 @@ class SearchView extends Component {
 
     search() {
         const criteria = this.state.searchCriteria;
+        
         const resultsRoute = '/results/' + criteria.cityName + '/' + criteria.checkInDate + '/' + criteria.checkOutDate
         this.props.history.push(resultsRoute);
+
     }
 
     handleChange(event) {
