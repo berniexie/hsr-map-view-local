@@ -50,23 +50,21 @@ class SearchView extends Component {
 
     search() {
         const criteria = this.state.searchCriteria;
-        const resultsRoute = '/results/' + criteria.cityName + '/' + Moment(criteria.checkInDate).format('MM-DD-YYYY') + '/' + Moment(criteria.checkOutDate).format('MM-DD-YYYY')
+        const resultsRoute = '/results/' + criteria.cityName + '/' + Moment(criteria.checkInDate).format('MM-DD-YYYY') + '/' + Moment(criteria.checkOutDate).format('MM-DD-YYYY');
         this.props.history.push(resultsRoute);
     }
 
     render() {
         return (
             <div className="search-container">
+                <h1>Welcome to Better HSR</h1>
                 <div className="search-bar">
-                    <h1>Welcome to Better HSR</h1>
                     <ul className="search-input">
-                        <TextField hintText="City/Region" type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange} />
-                        <div className="date-input">
-                            <DatePicker hintText="Check In Date" mode="landscape" name="checkInDate" value={this.state.searchCriteria.checkInDate} onChange={this.setCheckInDate} />
-                            <DatePicker hintText="Check Out Date" mode="landscape" name="checkOutDate" value={this.state.searchCriteria.checkOutDate} onChange={this.setCheckOutDate} />
-                        </div>
+                        <TextField className="city-input" hintText="City/Region" type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange}/>
+                        <DatePicker className="date-picker" hintText="Check In Date" mode="landscape" name="checkInDate" value={this.state.searchCriteria.checkInDate} onChange={this.setCheckInDate}/>
+                        <DatePicker className="date-picker" hintText="Check Out Date" mode="landscape" name="checkOutDate" value={this.state.searchCriteria.checkOutDate} onChange={this.setCheckOutDate}/>
+                        <RaisedButton className="search-button" onClick={() => this.search()}>Search</RaisedButton>
                     </ul>
-                    <RaisedButton className="search-button" onClick={() => this.search()}>Search</RaisedButton>
                 </div>
             </div>
         )
