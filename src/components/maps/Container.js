@@ -10,6 +10,7 @@ class Container extends Component {
             mapPinObjects: [],
             mapPinToRender: []
         }
+        this.createMarkerReactComponents = this.createMarkerReactComponents.bind(this);
     }
 
     createMarkerReactComponents() {

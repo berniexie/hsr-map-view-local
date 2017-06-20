@@ -1,3 +1,10 @@
+html {
+
+} ::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+  }
+
 * {
   margin: 0;
   padding: 0;
@@ -68,4 +75,12 @@ h1 {
 .result-component {
   border: solid;
   height: 150px;
+}
+
+.empty-extra-block {
+  height: calc(50vh - 200px);
+}
+
+.highlighted-result {
+  background-color: green;
 }

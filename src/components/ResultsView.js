@@ -19,8 +19,6 @@ class ResultsView extends Component {
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
         this.componentDidUpdate = this.componentDidUpdate.bind(this);
         this.getHotels = this.getHotels.bind(this);
-
-
     }
 
     calculateMapCenter() {
