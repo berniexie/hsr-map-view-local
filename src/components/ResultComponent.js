@@ -8,7 +8,6 @@ class ResultComponent extends Component {
 
     render() {
         const result = this.props.result;
-        console.log(this.props);
         const checkInDateReformat = Moment(this.props.checkInDate).format('MM-DD-YYYY');
         const checkOutDateReformat = Moment(this.props.checkOutDate).format('MM-DD-YYYY');
         const hisLink = "https:/www.expedia.com/h" + result.id + ".Hotel-Information?chkin=" + checkInDateReformat + "&chkout=" + checkOutDateReformat + "&rm1=a2";
