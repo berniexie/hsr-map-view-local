@@ -89,11 +89,13 @@ class ResultsView extends Component {
     }
 
     render() {
+        // temp mock
+        const searchResults = [1, 2, 3, 4, 5];
+
         return (
             <div className='results-view'>
-                <h1>Search Location: {this.state.cityName}</h1>
                 <MapContainer city={this.state.cityName} hotelSearch={this.getHotels}/>
-                <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel}/>
+                <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel} searchResults={searchResults}/>
             </div>
         )
     }
