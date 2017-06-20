@@ -41,7 +41,7 @@ class ResultsView extends Component {
        	const address = this.props.match.params.cityName;
         const promise = new Promise(function(resolve, reject){
         geocoder.geocode({'address' : address}, function(results, status){
-            if (status === 'OK'){
+            if (status == 'OK'){
                 c = results[0].geometry.location;
                 resolve(c);
             }
@@ -105,8 +105,7 @@ class ResultsView extends Component {
                     }
                 }));
             }
-        }
-
+        }	
         // This is for bumi call
         if(prevState.latLng !== this.state.latLng) {
             this.getHotels();
@@ -115,6 +114,7 @@ class ResultsView extends Component {
 
     goBack() {
 	    this.props.history.push('/');
+	    window.location.reload();
     }
 
     render() {
