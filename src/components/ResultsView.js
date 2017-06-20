@@ -96,7 +96,7 @@ class ResultsView extends Component {
 
     componentDidUpdate(prevProps, prevState) {
 	    // This is for the intial render
-	    if (this.state.centerLat == null || this.centerLng == null) {
+	    if (this.state.centerLatLng.lat === null || this.state.centerLatLng.lng === null) {
             if (prevProps.google !== this.props.google) {
                 this.calculateMapCenter().then(result => this.setState({
                     centerLatLng: {
