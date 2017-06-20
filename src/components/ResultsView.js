@@ -19,24 +19,24 @@ class ResultsView extends Component {
 
     }
 
-    calculateMapCenter() {
-    	var google = new GoogleApi();
-    	console.log(google);
-        var geocoder = new google.maps.Geocoder();
-        var c = new google.maps.LatLng(0,0);
-        geocoder.geocode({'address' : this.props.match.params.cityName}, function(results, status){
-            if (status == 'OK'){
-                console.log("Center is " + results[0].geometry.location);
-                c = results[0].geometry.location;
-            }
-            else{
-            	console.log("BAD");
-                alert("Google maps failed to find your location.");
-            }
-        });
-        this.setState({center: c});
-        console.log(c);    	
-    }
+    // calculateMapCenter() {
+    // 	var google = new GoogleApi();
+    // 	console.log(google);
+    //     var geocoder = new google.maps.Geocoder();
+    //     var c = new google.maps.LatLng(0,0);
+    //     geocoder.geocode({'address' : this.props.match.params.cityName}, function(results, status){
+    //         if (status == 'OK'){
+    //             console.log("Center is " + results[0].geometry.location);
+    //             c = results[0].geometry.location;
+    //         }
+    //         else{
+    //         	console.log("BAD");
+    //             alert("Google maps failed to find your location.");
+    //         }
+    //     });
+    //     this.setState({center: c});
+    //     console.log(c);    	
+    // }
 
 	updateSelectedHotel(hotelid){
 		console.log(hotelid);
@@ -74,13 +74,6 @@ class ResultsView extends Component {
     }
 
     render() {
-<<<<<<< HEAD
-        return <div className='results-view'>
-            <h1>Results View</h1>
-            <MapContainer center={this.props.match.params.cityName}/>
-            <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel}/>
-        </div>
-=======
         return (
             <div className='results-view'>
                 <h1>Search Location: {this.state.cityName}</h1>
@@ -88,7 +81,6 @@ class ResultsView extends Component {
                 <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel}/>
             </div>
         )
->>>>>>> d45668fb7f5cbc985bf913d25be11575dc1951ed
     }
 }
 
