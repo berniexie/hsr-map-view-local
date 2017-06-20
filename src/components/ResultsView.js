@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MapContainer from './maps/Container'
 import ResultsListComponent from './ResultsListComponent'
+import axios from 'axios'
 
 class ResultsView extends Component {
 	constructor(props) {
@@ -11,6 +12,7 @@ class ResultsView extends Component {
             checkOutDate: props.match.params.checkOutDate
         }
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
+        this.getHotels = this.getHotels.bind(this);
     }
 
 	updateSelectedHotel(hotelid){
@@ -39,7 +41,10 @@ class ResultsView extends Component {
         axios({
             method:'get',
             url:bumiUrl,
-            responseType:'stream'
+            responseType:'stream',
+            headers: {
+                'Client-Token': 'LODGING-PWA'
+            }
         }).then(function(response) {
             //update state and rerender things
         });
@@ -49,7 +54,7 @@ class ResultsView extends Component {
         return (
             <div className='results-view'>
                 <h1>Search Location: {this.state.cityName}</h1>
-                <MapContainer city={this.state.cityName}/>
+                <MapContainer city={this.state.cityName} hotelSearch={this.getHotels}/>
                 <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel}/>
             </div>
         )
