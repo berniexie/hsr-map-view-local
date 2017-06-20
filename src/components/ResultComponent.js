@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Moment from 'moment';
 
 class ResultComponent extends Component {
     constructor(props) {
@@ -7,7 +8,11 @@ class ResultComponent extends Component {
 
     render() {
         const result = this.props.result;
-        console.log(result);
+        console.log(this.props);
+        const checkInDateReformat = Moment(this.props.checkInDate).format('MM-DD-YYYY');
+        const checkOutDateReformat = Moment(this.props.checkOutDate).format('MM-DD-YYYY');
+        const hisLink = "https:/www.expedia.com/h" + result.id + ".Hotel-Information?chkin=" + checkInDateReformat + "&chkout=" + checkOutDateReformat + "&rm1=a2";
+
         return (
             <div className="result-component">
                 <img className="hotel-image" src={"https://images.trvl-media.com" + result.image.small} />
@@ -17,7 +22,7 @@ class ResultComponent extends Component {
                         <p>price: {result.price}</p>
                         <p>stars: {result.star}</p>
                     </span>
-                    <a className="more-info">more info</a>
+                    <a href={hisLink} target="_blank" className="more-info">more info</a>
                 </div>
             </div>
         )
