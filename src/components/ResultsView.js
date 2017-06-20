@@ -11,8 +11,10 @@ class ResultsView extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-        	centerLatLng: null,
-        	centerLng: null,
+        	centerLatLng: {
+        	    lat: null,
+                lng: null
+            },
         	cityName: props.match.params.cityName,
             checkInDate: props.match.params.checkInDate,
             checkOutDate: props.match.params.checkOutDate,
@@ -25,11 +27,11 @@ class ResultsView extends Component {
             },
             hotelResults: []
         };
-        this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
         this.calculateMapCenter = this.calculateMapCenter.bind(this);
         this.componentDidUpdate = this.componentDidUpdate.bind(this);
         this.getHotels = this.getHotels.bind(this);
         this.goBack = this.goBack.bind(this);
+        this.setNewBounds = this.setNewBounds.bind(this);
     }
 
     calculateMapCenter() {
@@ -51,12 +53,18 @@ class ResultsView extends Component {
         return promise;
     }
 
-	updateHighlightedHotel(hotelid){
-		console.log(hotelid);
-		//Here's where we would pass it down 
-	}
+    setNewBounds(bounds) {
+	    this.setState({
+	        latLng: {
+	            topLeftLat: bounds.getNorthEast().lat(),
+                topLeftLng: bounds.getNorthEast().lng(),
+                bottomRightLat: bounds.getSouthWest().lat(),
+                bottomRightLng: bounds.getSouthWest().lng()
+            }
+        });
+    }
 
-    getHotels(latLng) {
+    getHotels() {
 	    const siteId = 1;
 	    const langId = 1033;
 	    const guests = 2;
@@ -69,8 +77,8 @@ class ResultsView extends Component {
             checkin + "/" +
             checkout + "/?" +
             "maxResults=" + 20 +
-            "&top=" + this.state.latLng.topLeftlat +
-            "&right=" + this.state.latLng.topleftLng +
+            "&top=" + this.state.latLng.topLeftLat +
+            "&right=" + this.state.latLng.topLeftLng +
             "&bottom=" + this.state.latLng.bottomRightLat +
             "&left=" + this.state.latLng.bottomRightLng;
 
@@ -81,24 +89,28 @@ class ResultsView extends Component {
             headers: {
                 'Client-Token': 'LODGING-PWA'
             }
-        }).then(function(response) {
-            //update state and rerender things
-            //this.setState({hotelResults})
+        }).then((response) => {
+            this.setState({hotelResults: response.data});
         });
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
 	    // This is for the intial render
 	    if (this.state.centerLat == null || this.centerLng == null) {
             if (prevProps.google !== this.props.google) {
                 this.calculateMapCenter().then(result => this.setState({
-                    centerLat: result.lat(),
-                    centerLng: result.lng()
+                    centerLatLng: {
+                        lat: result.lat(),
+                        lng: result.lng()
+                    }
                 }));
             }
         }
 
         // This is for bumi call
+        if(prevState.latLng !== this.state.latLng) {
+            this.getHotels();
+        }
     }
 
     goBack() {
@@ -106,26 +118,23 @@ class ResultsView extends Component {
     }
 
     render() {
-        // temp mock
-        const searchResults = [1, 2, 3, 4, 5];
         var buttonStyle = {
             position: 'absolute',
             top: 10,
             left: 10
-        }
+        };
         return (
             <div className='results-view'>
                 <FloatingActionButton className="backButton" mini={true} style={buttonStyle} onClick={this.goBack}>
                     <BackAction color="white"/>
                 </FloatingActionButton>
-                <MapContainer google={this.props.google} lat={this.state.centerLat} long={this.state.centerLng} hotelSearch={this.getHotels} highlightedHotel={this.state.highlightedHotel}/>
-                <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel} searchResults={searchResults} highlightedHotel={this.state.highlightedHotel}/>
+                <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} />
+                <ResultsListComponent hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel}/>
             </div>
         )
     }
 }
 
-//export default ResultsView
 //this needs to be refactored
 export default GoogleApiComponent({
     apiKey : 'AIzaSyAvHEM53jt2i4y-VRiibELAcBVKkLMAKds'

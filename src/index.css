@@ -78,6 +78,8 @@ h1 {
   max-height: 50vh;
   overflow: scroll;
   padding: 0px;
+  scroll-snap-type: mandatory;
+  scroll-snap-points-y: repeat(15vh);
 }
 
 .result-component {

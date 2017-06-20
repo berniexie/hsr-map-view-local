@@ -50,7 +50,10 @@ class SearchView extends Component {
 
     search() {
         const criteria = this.state.searchCriteria;
-        const resultsRoute = '/results/' + criteria.cityName + '/' + Moment(criteria.checkInDate).format('MM-DD-YYYY') + '/' + Moment(criteria.checkOutDate).format('MM-DD-YYYY');
+        const cityName = criteria.cityName;
+        const checkInDate = Moment(criteria.checkInDate).format('YYYY-MM-DD');
+        const checkOutDate = Moment(criteria.checkOutDate).format('YYYY-MM-DD');
+        const resultsRoute = '/results/' + cityName + '/' + checkInDate + '/' + checkOutDate;
         this.props.history.push(resultsRoute);
     }
 

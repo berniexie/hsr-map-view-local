@@ -8,8 +8,7 @@ class ResultsListComponent extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            highlightedResult: props.highlightedResult,
-            searchResults: props.searchResults,
+            highlightedResult: props.highlightedHotel,
         }
     }
 
@@ -24,14 +23,14 @@ class ResultsListComponent extends Component {
         return (
         	<List className='results-list-component' style={{padding:0}}>
                 {
-                    this.state.searchResults.map((result) => {
-                        if (this.state.highlightedResult == 0 || this.state.highlightedResult === result) {
+                    this.props.hotelResults.map((result) => {
+                        if (this.state.highlightedResult == 0 || this.state.highlightedResult === result.id) {
                             this.state.highlightedResult = 1;
                             return (
-                                <Waypoint key={result} onEnter={this._handleWaypointEnter.bind(this, result)} bottomOffset={300}>
+                                <Waypoint key={result.id} onEnter={this._handleWaypointEnter.bind(this, result.id)} bottomOffset={300}>
                                     <div className="highlighted-result">
                                         <ListItem>
-                                            <ResultComponent result={result} ref={'result' + result}/>
+                                            <ResultComponent result={result} ref={'result' + result.id}/>
                                         </ListItem>
                                         <Divider />
                                     </div>
@@ -39,10 +38,10 @@ class ResultsListComponent extends Component {
                             )
                         } else {
                             return (
-                                <Waypoint key={result} onEnter={this._handleWaypointEnter.bind(this, result)} bottomOffset={300}>
+                                <Waypoint key={result.id} onEnter={this._handleWaypointEnter.bind(this, result.id)} bottomOffset={300}>
                                     <div className="non-highlighted-result">
                                         <ListItem>
-                                            <ResultComponent result={result} ref={'result' + result}/>
+                                            <ResultComponent result={result} ref={'result' + result.id}/>
                                         </ListItem>
                                         <Divider />
                                     </div>

@@ -13,7 +13,7 @@ class MapComponent extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.google !== this.props.google || prevProps.lat !== this.props.lat || prevProps.long !== this.props.long) {
+        if (prevProps.google !== this.props.google || prevProps.latLng !== this.props.latLng) {
             this.loadMap();
         }
     }
@@ -22,9 +22,8 @@ class MapComponent extends Component {
         this.loadMap();
     }
 
-    onPanZoom() {
-        console.log('within the function onPanZoom');
-        // this.props.onMove(this.map);
+    onPanZoom(bounds) {
+        this.props.setNewBounds(bounds);
     }
 
     loadMap() {
@@ -38,8 +37,8 @@ class MapComponent extends Component {
 
             //default stuff
             let zoom = 12;
-            let lat = this.props.lat;
-            let lng = this.props.long;
+            let lat = this.props.latLng.lat;
+            let lng = this.props.latLng.lng;
             var center = new maps.LatLng(lat, lng);
 
             const mapConfig = Object.assign({}, {
@@ -51,7 +50,7 @@ class MapComponent extends Component {
             //setting the actual map
             this.map = new maps.Map(node, mapConfig);
             this.map.addListener('idle', (evt) => {
-                this.onPanZoom();
+                this.onPanZoom(this.map.getBounds());
             })
 
             this.forceUpdate();

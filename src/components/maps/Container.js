@@ -6,7 +6,7 @@ class Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hotelResults: [],
+            hotelResults: props.hotelResults,
             hotelPinsGenerated: [],
             highlightedResult: props.highlightedResult
         }
@@ -24,7 +24,7 @@ class Container extends Component {
     render() {
         return (
             <div className='map-container'>
-                <Map google={this.props.google} lat={this.props.lat} long={this.props.long} city={this.props.city}>
+                <Map google={this.props.google} latLng={this.props.latLng} setNewBounds={this.props.setNewBounds} city={this.props.city}>
                     {this.createMarkerReactComponents()}
                 </Map>
             </div>
