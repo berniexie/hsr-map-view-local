@@ -84,6 +84,32 @@ h1 {
 
 .result-component {
   height: 15vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.hotel-image {
+  min-height: 75px;
+  min-width: 75px;
+}
+
+.result-content {
+  flex-grow: 1;
+}
+
+.result-content h3 {
+  margin: 0;
+  padding: 10px;
+}
+
+.result-information {
+  display: flex;
+  flex-direciton: row;
+}
+
+.result-information p {
+  padding-left: 20px;
 }
 
 .empty-extra-block {
@@ -92,6 +118,12 @@ h1 {
 
 .highlighted-result {
   border-left: solid #00BCD4;
+}
+
+.more-info {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 
 .non-highlighted-result {
