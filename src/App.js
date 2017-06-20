@@ -12,7 +12,7 @@ injectTapEventPlugin();
 const App = () => (
     <MuiThemeProvider>
         <Router>
-            <div>
+            <div className="app">
                 <Route exact path="/" component={SearchView}/>
                 <Route path="/results/:cityName/:checkInDate/:checkOutDate" component={ResultsView}/>
             </div>
