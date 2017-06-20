@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MapContainer from './maps/Container'
 import ResultsListComponent from './ResultsListComponent'
 import axios from 'axios'
+import GoogleApiComponent from './maps/GoogleApiComponent'
 
 class ResultsView extends Component {
 	constructor(props) {
@@ -13,30 +14,32 @@ class ResultsView extends Component {
             checkOutDate: props.match.params.checkOutDate
         };
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
-        this.calculateMapCenter = this.calculateMapCenter.bind(this);
+        // this.calculateMapCenter = this.calculateMapCenter.bind(this);
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
         this.getHotels = this.getHotels.bind(this);
+        // this.calculateMapCenter();
+
 
     }
 
-    // calculateMapCenter() {
-    // 	var google = new GoogleApi();
-    // 	console.log(google);
-    //     var geocoder = new google.maps.Geocoder();
-    //     var c = new google.maps.LatLng(0,0);
-    //     geocoder.geocode({'address' : this.props.match.params.cityName}, function(results, status){
-    //         if (status == 'OK'){
-    //             console.log("Center is " + results[0].geometry.location);
-    //             c = results[0].geometry.location;
-    //         }
-    //         else{
-    //         	console.log("BAD");
-    //             alert("Google maps failed to find your location.");
-    //         }
-    //     });
-    //     this.setState({center: c});
-    //     console.log(c);    	
-    // }
+    calculateMapCenter() {
+    	var google = this.props.google;
+    	console.log(google);
+        var geocoder = new google.maps.Geocoder();
+        var c = new google.maps.LatLng(0,0);
+        geocoder.geocode({'address' : this.props.match.params.cityName}, function(results, status){
+            if (status == 'OK'){
+                console.log("Center is " + results[0].geometry.location);
+                c = results[0].geometry.location;
+            }
+            else{
+            	console.log("BAD");
+                alert("Google maps failed to find your location.");
+            }
+        });
+        this.setState({center: c});
+        console.log(c);    	
+    }
 
 	updateSelectedHotel(hotelid){
 		console.log(hotelid);
@@ -73,6 +76,18 @@ class ResultsView extends Component {
         });
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.google !== this.props.google) {
+        	console.log("Did update " + this.props);
+            //this.calculateMapCenter();
+        }
+    }
+
+    componentDidMount() {
+    	console.log("Did mount " + this);
+        //this.calculateMapCenter();
+    }
+
     render() {
         return (
             <div className='results-view'>
@@ -84,6 +99,10 @@ class ResultsView extends Component {
     }
 }
 
-export default ResultsView
-
+//export default ResultsView
+//this needs to be refactored
+export default GoogleApiComponent({
+    apiKey : 'AIzaSyAvHEM53jt2i4y-VRiibELAcBVKkLMAKds'
+    //apiKey: 'AIzaSyB6A_FPXPxidc3vWP-Z5eEXddcNrti4iVM'
+})(ResultsView)
 //Eventually will need to pass a function whenever the map pans and zooms
