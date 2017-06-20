@@ -14,15 +14,15 @@ class ResultsView extends Component {
             checkOutDate: props.match.params.checkOutDate
         };
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
-        // this.calculateMapCenter = this.calculateMapCenter.bind(this);
+        this.calculateMapCenter = this.calculateMapCenter.bind(this);
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
         this.getHotels = this.getHotels.bind(this);
-        // this.calculateMapCenter();
 
 
     }
 
     calculateMapCenter() {
+    	console.log
     	var google = this.props.google;
     	console.log(google);
         var geocoder = new google.maps.Geocoder();
@@ -78,14 +78,14 @@ class ResultsView extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.google !== this.props.google) {
-        	console.log("Did update " + this.props);
-            //this.calculateMapCenter();
+        	//console.log("Did update " + this.props);
+            // this.calculateMapCenter();
         }
     }
 
     componentDidMount() {
-    	console.log("Did mount " + this);
-        //this.calculateMapCenter();
+    	//console.log("Did mount " + this);
+        // this.calculateMapCenter();
     }
 
     render() {

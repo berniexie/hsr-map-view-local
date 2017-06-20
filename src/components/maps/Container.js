@@ -32,9 +32,9 @@ class Container extends Component {
 }
 
 // //this needs to be refactored
-export default Container
-// export default GoogleApiComponent({
-//     apiKey : 'AIzaSyAvHEM53jt2i4y-VRiibELAcBVKkLMAKds'
-//     //apiKey: 'AIzaSyB6A_FPXPxidc3vWP-Z5eEXddcNrti4iVM'
-// })(Container)
+// export default Container
+export default GoogleApiComponent({
+    apiKey : 'AIzaSyAvHEM53jt2i4y-VRiibELAcBVKkLMAKds'
+    //apiKey: 'AIzaSyB6A_FPXPxidc3vWP-Z5eEXddcNrti4iVM'
+})(Container)
 
