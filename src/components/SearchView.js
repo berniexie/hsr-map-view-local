@@ -60,7 +60,7 @@ class SearchView extends Component {
     render() {
         return (
             <div className="search-container">
-                <h1>Welcome to Better HSR</h1>
+                <h1>Welcome to BetterCup</h1>
                 <div className="search-bar">
                     <ul className="search-input">
                         <TextField className="city-input" hintText="City/Region" type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange}/>

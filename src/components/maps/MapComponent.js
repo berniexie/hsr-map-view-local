@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import axios from 'axios'
 
 class MapComponent extends Component {
     constructor(props) {

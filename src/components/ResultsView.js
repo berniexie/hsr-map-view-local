@@ -42,7 +42,7 @@ class ResultsView extends Component {
        	const address = this.props.match.params.cityName;
         const promise = new Promise(function(resolve, reject){
         geocoder.geocode({'address' : address}, function(results, status){
-            if (status === 'OK'){
+            if (status == 'OK'){
                 c = results[0].geometry.location;
                 resolve(c);
             }
@@ -112,8 +112,7 @@ class ResultsView extends Component {
                     }
                 }));
             }
-        }
-
+        }	
         // This is for bumi call
         if(prevState.latLng !== this.state.latLng) {
             this.getHotels();
@@ -122,6 +121,7 @@ class ResultsView extends Component {
 
     goBack() {
 	    this.props.history.push('/');
+	    window.location.reload();
     }
 
     render() {
@@ -139,7 +139,7 @@ class ResultsView extends Component {
                     <BackAction color="white"/>
                 </FloatingActionButton>
                 <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} />
-                <ResultsListComponent hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} updateHighlightedHotel={this.updateHighlightedHotel}/>
+                <ResultsListComponent hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
             </div>
         )
     }
