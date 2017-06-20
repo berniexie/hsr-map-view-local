@@ -8,7 +8,8 @@ class ResultsView extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-        	center: null,
+        	centerlat: null,
+        	centerlong: null,
         	cityName: props.match.params.cityName,
             checkInDate: props.match.params.checkInDate,
             checkOutDate: props.match.params.checkOutDate
@@ -16,29 +17,29 @@ class ResultsView extends Component {
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
         this.calculateMapCenter = this.calculateMapCenter.bind(this);
         this.updateSelectedHotel = this.updateSelectedHotel.bind(this);
+        this.componentDidUpdate = this.componentDidUpdate.bind(this);
         this.getHotels = this.getHotels.bind(this);
 
 
     }
 
     calculateMapCenter() {
-    	console.log
     	var google = this.props.google;
-    	console.log(google);
         var geocoder = new google.maps.Geocoder();
         var c = new google.maps.LatLng(0,0);
-        geocoder.geocode({'address' : this.props.match.params.cityName}, function(results, status){
+       	const address = this.props.match.params.cityName;
+        const promise = new Promise(function(resolve, reject){
+        geocoder.geocode({'address' : address}, function(results, status){
             if (status == 'OK'){
-                console.log("Center is " + results[0].geometry.location);
                 c = results[0].geometry.location;
+                resolve(c);
             }
             else{
-            	console.log("BAD");
                 alert("Google maps failed to find your location.");
+                reject();
             }
-        });
-        this.setState({center: c});
-        console.log(c);    	
+        });});	
+        return promise;
     }
 
 	updateSelectedHotel(hotelid){
@@ -78,23 +79,19 @@ class ResultsView extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.google !== this.props.google) {
-        	//console.log("Did update " + this.props);
-            // this.calculateMapCenter();
+        	this.calculateMapCenter().then(result => this.setState({
+            	centerlat: result.lat(), 
+            	centerlong: result.lng()
+        	}));  
         }
-    }
-
-    componentDidMount() {
-    	//console.log("Did mount " + this);
-        // this.calculateMapCenter();
     }
 
     render() {
         // temp mock
         const searchResults = [1, 2, 3, 4, 5];
-
         return (
             <div className='results-view'>
-                <MapContainer city={this.state.cityName} hotelSearch={this.getHotels}/>
+                <MapContainer google={this.props.google} lat={this.state.centerlat} long={this.state.centerlong} hotelSearch={this.getHotels}/>
                 <ResultsListComponent updateSelectedHotel={this.updateSelectedHotel} searchResults={searchResults}/>
             </div>
         )

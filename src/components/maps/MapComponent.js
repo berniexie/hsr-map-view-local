@@ -13,7 +13,7 @@ class MapComponent extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.google !== this.props.google) {
+        if (prevProps.google !== this.props.google || prevProps.lat !== this.props.lat || prevProps.long !== this.props.long) {
             this.loadMap();
         }
     }
@@ -37,9 +37,9 @@ class MapComponent extends Component {
             const node = ReactDOM.findDOMNode(mapRef);
 
             //default stuff
-            let zoom = 14;
-            let lat = 0.0;
-            let lng = 0.0;
+            let zoom = 12;
+            let lat = this.props.lat;
+            let lng = this.props.long;
             var center = new maps.LatLng(lat, lng);
 
             const mapConfig = Object.assign({}, {
