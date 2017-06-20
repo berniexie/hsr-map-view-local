@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
-import {List, ListItem} from 'material-ui/List';
+import {List, ListItem} from 'material-ui/List'
+import ResultComponent from './ResultComponent'
 
 class ResultsListComponent extends Component {
 	constructor(props) {
         super(props);
         this.state = {
             selectedHotel: '',
-            searchResults: {}
+            searchResults: props.searchResults
         }
+
+
         this.handleMouseOver = this.handleMouseOver.bind(this);
     }
 	
@@ -21,20 +24,18 @@ class ResultsListComponent extends Component {
 
     render() {
         return (
-        	<List className='results-list-component'>
-                <ListItem id="1" onMouseOver={this.handleMouseOver}>Item1</ListItem>
-                <ListItem id="2" onMouseOver={this.handleMouseOver}>Item2</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
-                <ListItem id="3" onMouseOver={this.handleMouseOver}>Item3</ListItem>
+        	<List className='results-list-component' style={{padding:0}}>
+                {
+                    this.state.searchResults.map((result) => {
+                        return (
+                        	<ListItem  onMouseOver={this.handleMouseOver}>
+                                <ResultComponent result={result}/>
+                            </ListItem>
+						);
+                    })
+                }
         	</List>
-        	);
+		);
     }
 }
 

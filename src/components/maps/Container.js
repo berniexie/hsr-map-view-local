@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import GoogleApiComponent from './GoogleApiComponent'
 import Map from './MapComponent'
 import Marker from './MarkerComponent'
 
-export class Container extends React.Component {
+class Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
