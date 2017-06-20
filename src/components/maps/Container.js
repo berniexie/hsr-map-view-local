@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import GoogleApiComponent from './GoogleApiComponent'
 import Map from './MapComponent'
 import Marker from './MarkerComponent'
 
@@ -7,14 +6,15 @@ class Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mapPinObjects: [],
-            mapPinToRender: []
+            hotelResults: [],
+            hotelPinsGenerated: [],
+            highlightedResult: props.highlightedResult
         }
         this.createMarkerReactComponents = this.createMarkerReactComponents.bind(this);
     }
 
     createMarkerReactComponents() {
-        const markers = this.state.mapPinObjects.map((pin) => {
+        const markers = this.state.hotelPinsGenerated.map((pin) => {
             return <Marker position={pin.position} />;
         });
 

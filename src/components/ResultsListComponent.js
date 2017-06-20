@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {List, ListItem} from 'material-ui/List'
-import ReactDOM from 'react-dom'
+import Divider from 'material-ui/Divider';
 import ResultComponent from './ResultComponent'
 import Waypoint from 'react-waypoint'
 
@@ -8,13 +8,13 @@ class ResultsListComponent extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            selectedHotel: '',
+            highlightedResult: props.highlightedResult,
             searchResults: props.searchResults,
-            highlightedResult: 0
         }
     }
 
 	_handleWaypointEnter(result) {
+	    //this eventually should be replaced with a function passed from the props
 	    this.setState({
             highlightedResult: result
         });
@@ -33,6 +33,7 @@ class ResultsListComponent extends Component {
                                         <ListItem>
                                             <ResultComponent result={result} ref={'result' + result}/>
                                         </ListItem>
+                                        <Divider />
                                     </div>
                                 </Waypoint>
                             )
@@ -43,6 +44,7 @@ class ResultsListComponent extends Component {
                                         <ListItem>
                                             <ResultComponent result={result} ref={'result' + result}/>
                                         </ListItem>
+                                        <Divider />
                                     </div>
                                 </Waypoint>
                             );

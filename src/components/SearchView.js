@@ -61,8 +61,8 @@ class SearchView extends Component {
                 <div className="search-bar">
                     <ul className="search-input">
                         <TextField className="city-input" hintText="City/Region" type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange}/>
-                        <DatePicker className="date-picker" hintText="Check In Date" mode="landscape" name="checkInDate" value={this.state.searchCriteria.checkInDate} onChange={this.setCheckInDate}/>
-                        <DatePicker className="date-picker" hintText="Check Out Date" mode="landscape" name="checkOutDate" value={this.state.searchCriteria.checkOutDate} onChange={this.setCheckOutDate}/>
+                        <DatePicker className="date-picker" hintText="Check In Date" name="checkInDate" value={this.state.searchCriteria.checkInDate} onChange={this.setCheckInDate}/>
+                        <DatePicker className="date-picker" hintText="Check Out Date" name="checkOutDate" value={this.state.searchCriteria.checkOutDate} onChange={this.setCheckOutDate}/>
                         <RaisedButton className="search-button" onClick={() => this.search()}>Search</RaisedButton>
                     </ul>
                 </div>
