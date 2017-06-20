@@ -25,7 +25,8 @@ class ResultsView extends Component {
                 bottomRightLat: null,
                 bottomRightLng: null
             },
-            hotelResults: []
+            hotelResults: [],
+            faveHotels: []
         };
         this.calculateMapCenter = this.calculateMapCenter.bind(this);
         this.componentDidUpdate = this.componentDidUpdate.bind(this);
@@ -52,6 +53,11 @@ class ResultsView extends Component {
             }
         });});	
         return promise;
+    }
+
+    addToFavorites(id){
+    	this.state.faveHotels += id;
+    	console.log(this.state);
     }
 
     setNewBounds(bounds) {
@@ -139,7 +145,7 @@ class ResultsView extends Component {
                     <BackAction color="white"/>
                 </FloatingActionButton>
                 <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} />
-                <ResultsListComponent hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
+                <ResultsListComponent addToFavorites={this.addToFavorites} hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
             </div>
         )
     }

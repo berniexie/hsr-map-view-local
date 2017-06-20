@@ -1,9 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Moment from 'moment';
+import IconToggle from 'react-mdl/lib/IconToggle';
 
 class ResultComponent extends Component {
     constructor(props) {
         super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(event){
+        //Note: this is being called a ton without ever being clicked on!
+        console.log("Click: " + this.props.result.id);
+        console.log(this.props);
+        //this.props.addToFavorites(this.props.result.id);
     }
 
     render() {
@@ -20,6 +29,7 @@ class ResultComponent extends Component {
                     <span className="result-information">
                         <p>price: {result.price}</p>
                         <p>stars: {result.star}</p>
+                        <button type="button" onClick={this.handleClick}>heart</button>
                     </span>
                     <a href={hisLink} target="_blank" className="more-info">more info</a>
                 </div>
