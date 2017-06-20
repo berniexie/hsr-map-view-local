@@ -27,7 +27,7 @@ body, root {
   height: 50vh;
 }
 
-h1, h2, h3 {
+h1, h2 {
   text-align: center;
   font-weight: 100;
 }
@@ -84,6 +84,11 @@ h1 {
 
 .result-component {
   height: 15vh;
+}
+
+.result-component a {
+  color: black;
+  text-decoration: none;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -101,14 +106,26 @@ h1 {
 .result-content h3 {
   margin: 0;
   padding: 10px;
+  text-align: left;
+  font-weight: 100;
+  font-size: 2ex;
 }
 
 .result-information {
   display: flex;
   flex-direciton: row;
+  justify-content: space-between;
+  padding-right: 20px;
 }
 
 .result-information p {
+  padding-left:10px;
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   padding-left: 20px;
 }
 
@@ -129,4 +146,3 @@ h1 {
 .non-highlighted-result {
   border-left: solid transparent;
 }
-
