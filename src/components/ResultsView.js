@@ -32,6 +32,7 @@ class ResultsView extends Component {
         this.getHotels = this.getHotels.bind(this);
         this.goBack = this.goBack.bind(this);
         this.setNewBounds = this.setNewBounds.bind(this);
+        this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
     }
 
     calculateMapCenter() {
@@ -61,6 +62,12 @@ class ResultsView extends Component {
                 bottomRightLat: bounds.getSouthWest().lat(),
                 bottomRightLng: bounds.getSouthWest().lng()
             }
+        });
+    }
+
+    updateHighlightedHotel(result) {
+        this.setState({
+            highlightedHotel: result
         });
     }
 
@@ -123,13 +130,16 @@ class ResultsView extends Component {
             top: 10,
             left: 10
         };
+
+        console.log(this.state.highlightedHotel);
+
         return (
             <div className='results-view'>
                 <FloatingActionButton className="backButton" mini={true} style={buttonStyle} onClick={this.goBack}>
                     <BackAction color="white"/>
                 </FloatingActionButton>
                 <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} />
-                <ResultsListComponent hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel}/>
+                <ResultsListComponent hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} updateHighlightedHotel={this.updateHighlightedHotel}/>
             </div>
         )
     }
