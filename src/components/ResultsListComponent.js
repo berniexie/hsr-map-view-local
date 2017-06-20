@@ -25,7 +25,7 @@ class ResultsListComponent extends Component {
                 {
                     this.props.hotelResults.map((result) => {
                         if (this.state.highlightedResult == 0 || this.state.highlightedResult === result.id) {
-                            this.state.highlightedResult = 1;
+                            this.state.highlightedResult = result.id;
                             return (
                                 <Waypoint key={result.id} onEnter={this._handleWaypointEnter.bind(this, result.id)} bottomOffset={300}>
                                     <div className="highlighted-result">
