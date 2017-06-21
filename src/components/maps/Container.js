@@ -19,7 +19,6 @@ class Container extends Component {
 
     goBack() {
         this.props.history.push('/');
-        // window.location.reload();
     }
 
     clearMarker(marker) {
@@ -40,7 +39,7 @@ class Container extends Component {
                 <Map google={this.props.google} latLng={this.props.latLng} setNewBounds={this.props.setNewBounds} city={this.props.city}>
                     {
                         this.props.hotelResults.map((pin) => {
-                            return (<Marker key={pin.id} position={pin.latLong} price={pin.id} highlightedHotel={this.props.highlightedHotel} hotelId={pin.id} clearMarker={this.clearMarker} />);
+                            return (<Marker key={pin.id} position={pin.latLong} price={pin.price.replace( /^\D+/g, '')} highlightedHotel={this.props.highlightedHotel} hotelId={pin.id} clearMarker={this.clearMarker} />);
                         })
                     }
                 </Map>

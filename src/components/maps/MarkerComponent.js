@@ -38,10 +38,12 @@ class MarkerComponent extends Component {
             this.marker = new google.maps.Marker(pref);
         }
 
-        if (this.props.highlightedHotel == this.props.key) {
+        if (this.props.highlightedHotel == this.props.hotelId) {
             this.onMarkerMouseOver(this.marker);
+            this.popMarkerToFront(this.marker);
         } else {
             this.setMarkerIcon(this.marker);
+            this.pushMarkerBack(this.marker);
         }
         this.marker.addListener('click', (evt) => {
             this.onMarkerClick();
@@ -55,10 +57,25 @@ class MarkerComponent extends Component {
     }
 
     setMarkerIcon(googleMarker){
-        if (this.props.price !== null) {
+        if (this.props.price !== "0") {
             this.setMarkerIconToBlueBubble(googleMarker);
             this.setMarkerLabelPrice(googleMarker);
+        } else {
+            this.setMarkerIconToRedBubble(googleMarker);
+            this.setMarkerLabelPrice(googleMarker);
         }
+    }
+
+    setMarkerIconToRedBubble(marker) {
+        var bubbleIcon = {
+            path: this.getMarkerIconSVGPathFromPriceLength(7),
+            anchor: new this.props.google.maps.Point(this.getMarkerIconAnchorWidthFromPriceLength(7), 36),
+            fillColor: '#DC143C',
+            fillOpacity: 1,
+            strokeColor: 'white',
+            labelOrigin: new this.props.google.maps.Point(this.getMarkerIconAnchorWidthFromPriceLength(7), 14)
+        };
+    marker.setIcon(bubbleIcon);
     }
 
     setMarkerIconToBlueBubble(marker) {
@@ -133,7 +150,7 @@ class MarkerComponent extends Component {
             color: 'white',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
             fontSize: '13px',
-            text: this.props.price.toString()
+            text: (this.props.price.toString() == "0") ? "Sold Out" : this.props.price.toString()
         };
         marker.setLabel(priceLabel);
     }
@@ -158,6 +175,14 @@ class MarkerComponent extends Component {
 
         marker.setIcon(invertedIcon);
         marker.setLabel(invertedLabel);
+    }
+
+    pushMarkerBack(marker) {
+        marker.setZIndex(marker.originalZIndex);
+    }
+
+    popMarkerToFront(marker) {
+        marker.setZIndex(this.props.google.maps.Marker.MAX_ZINDEX + 1);
     }
 
     render() {

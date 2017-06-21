@@ -100,7 +100,7 @@ class ResultsView extends Component {
             guests + "/" +
             checkin + "/" +
             checkout + "/?" +
-            "maxResults=" + 5 +
+            "maxResults=" + 20 +
             "&top=" + this.state.latLng.topRightLat +
             "&right=" + this.state.latLng.topRightLng +
             "&bottom=" + this.state.latLng.bottomLeftLat +
