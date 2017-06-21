@@ -10,7 +10,7 @@ class SearchView extends Component {
         super();
         this.state = {
             searchCriteria: {
-                cityName: 'San Francisco',
+                cityName: '',
                 checkInDate: Moment().toDate(),
                 checkOutDate: Moment().add(1, 'days').toDate(),
                 errorMessage: ''

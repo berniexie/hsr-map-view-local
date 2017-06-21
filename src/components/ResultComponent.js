@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
 import Moment from 'moment';
+import IconToggle from 'react-mdl/lib/IconToggle';
 import HalfStar from 'material-ui/svg-icons/toggle/star-half';
 import Star from 'material-ui/svg-icons/toggle/star';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -82,7 +82,7 @@ class ResultComponent extends Component {
             width: 55,
             fontSize: this.state.faved ? '24px' : '16px',
             position: 'absolute',
-            bottom: 65,
+            bottom: 60,
             right: 25
         }
 
@@ -108,11 +108,6 @@ class ResultComponent extends Component {
             top: 25
         }
 
-        let priceStyle = {
-            color: priceText==='Sold Out' ? 'red' : 'black',
-            fontSize: '14px'
-        }
-
         let text = this.state.faved ? '\u2764' : 'Favorite';
         let priceText = result.price !== '$0' ? result.price + ' per night' : 'Sold Out';
 
@@ -123,7 +118,7 @@ class ResultComponent extends Component {
                     <div className="result-content">
                         <h3 style={headerStyle}>{result.propertyName}</h3>
                         <span className="result-information" style={lineDivStyle}>
-                            <p style={priceStyle}> {priceText}</p>
+                            <p style={{color: priceText==='Sold Out' ? 'red' : 'black', fontSize:'14px'}}> {priceText}</p>
                             <div className="star-rating">
                                 {this.renderStars().map((star) => {
                                     return star;
@@ -132,11 +127,11 @@ class ResultComponent extends Component {
                         </span>
                         <div className="buttons-div">
                                 <RaisedButton style={bookButtonStyle} onClick={this.openNewWindow}>
-                                <span style={{color: this.state.visited ? 'SlateBlue' : 'RoyalBlue'}}> Book It </span>
+                                <span style={{color: this.state.visited ? 'RoyalBlue' : 'DodgerBlue'}}> Book It </span>
                                 </RaisedButton>
                                 
-                                <RaisedButton style={faveButtonStyle} backgroundColor={this.state.faved ? 'RoyalBlue' : 'white'} onClick={this.favorite}>
-                                <span style={{color: this.state.faved ? 'white' : 'RoyalBlue'}}>{text}</span>
+                                <RaisedButton style={faveButtonStyle} backgroundColor={this.state.faved ? 'DodgerBlue' : 'white'} onClick={this.favorite}>
+                                <span style={{color: this.state.faved ? 'white' : 'DodgerBlue'}}>{text}</span>
                                 </RaisedButton> 
                             </div>
                     </div>
