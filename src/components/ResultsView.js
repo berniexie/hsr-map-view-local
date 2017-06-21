@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import MapContainer from './maps/Container'
-import ResultsListComponent from './ResultsListComponent'
-import GoogleApiComponent from './maps/GoogleApiComponent'
+import React, { Component } from 'react';
+import axios from 'axios';
+import MapContainer from './maps/Container';
+import ResultsListComponent from './ResultsListComponent';
+import GoogleApiComponent from './maps/GoogleApiComponent';
 
 class ResultsView extends Component {
 	constructor(props) {
@@ -121,26 +121,29 @@ class ResultsView extends Component {
 
     updateHotelResults(){
     	let hotels = new Array();
-    	
+
     	for(let i=0; i< this.state.faveHotels.length; i++){
     		hotels.push(this.state.faveHotels[i]);
     	}
-    	console.log("added faves");
-    	console.log(this.state);
-    	console.log(hotels);
-
+    	
     	var bumiResults = this.state.bumiResults;
     	for (let i=0; i < bumiResults.length; i++){
     		//was this result favorited? If not, add it
-    		if (hotels.indexOf(bumiResults[i]) === -1){
+    		if (!this.contains(this.state.faveHotels, bumiResults[i])){
     			hotels.push(bumiResults[i]);
     		}
+
     	}
     	this.setState({hotelResults: hotels});
     	this.forceUpdate();
-    	console.log("added others");
-    	console.log(this.state);
-    	console.log(hotels);
+    }
+
+    contains(array, element){
+    	for(let i=0; i<array.length; i++){
+    		if (array[i].id === element.id)
+    			return true;
+    	}
+    	return false;
     }
 
     componentDidUpdate(prevProps, prevState) {

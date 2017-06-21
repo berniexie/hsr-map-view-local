@@ -47,7 +47,6 @@ class ResultComponent extends Component {
     }
 
     favorite(){
-        console.log(this);
         if (this.state.faved){
             this.props.removeFromFavorites(this.props.result);
             this.setState({faved: false});
@@ -66,7 +65,7 @@ class ResultComponent extends Component {
 
         let bookButtonStyle = {
             height: 45,
-            width: 55,
+            width: 60,
             fontSize: '16px',
             position: 'absolute',
             bottom: 5,
@@ -75,9 +74,9 @@ class ResultComponent extends Component {
 
         let faveButtonStyle = {
             height: 45,
-            width: 55,
-            fontSize: '16px',
-            backgroundColor: this.state.faved ? 'pink' : 'white',
+            width: 60,
+            color: 'purple',
+            fontSize: this.state.faved ? '24px' : '16px',
             position: 'absolute',
             bottom: 55,
             right: 15
@@ -103,7 +102,7 @@ class ResultComponent extends Component {
             top: 25
         }
 
-        let text = this.state.faved ? 'Unfavorite' : 'Favorite'; 
+        let text = this.state.faved ? '\u2764' : 'Favorite'; 
 
         return (
             <div className="result-component">
@@ -124,7 +123,7 @@ class ResultComponent extends Component {
                                 Book It
                                 </RaisedButton>
                                 
-                                <RaisedButton style={faveButtonStyle} onClick={this.favorite}>
+                                <RaisedButton style={faveButtonStyle} backgroundColor={this.state.faved ? 'DodgerBlue' : 'white'} onClick={this.favorite}>
                                 {text}
                                 </RaisedButton> 
                             </div>
