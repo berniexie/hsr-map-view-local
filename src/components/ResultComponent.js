@@ -10,7 +10,8 @@ class ResultComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            faved: false
+            faved: false,
+            visited: false,
         };
         this.favorite = this.favorite.bind(this);
         this.renderStars = this.renderStars.bind(this);
@@ -44,6 +45,7 @@ class ResultComponent extends Component {
         const checkOutDateReformat = Moment(this.props.checkOutDate).format('MM-DD-YYYY');
         const hisLink = "https:/www.expedia.com/h" + result.id + ".Hotel-Information?chkin=" + checkInDateReformat + "&chkout=" + checkOutDateReformat + "&rm1=a2";
         window.open(hisLink, '_blank');
+        this.setState({visited: true});
     }
 
     favorite(){
@@ -75,7 +77,6 @@ class ResultComponent extends Component {
         let faveButtonStyle = {
             height: 45,
             width: 60,
-            color: 'purple',
             fontSize: this.state.faved ? '24px' : '16px',
             position: 'absolute',
             bottom: 55,
@@ -120,11 +121,11 @@ class ResultComponent extends Component {
                         </span>
                         <div className="buttons-div">
                                 <RaisedButton style={bookButtonStyle} onClick={this.openNewWindow}>
-                                Book It
+                                <span style={{color: this.state.visited ? 'RoyalBlue' : 'DodgerBlue'}}> Book It </span>
                                 </RaisedButton>
                                 
                                 <RaisedButton style={faveButtonStyle} backgroundColor={this.state.faved ? 'DodgerBlue' : 'white'} onClick={this.favorite}>
-                                {text}
+                                <span style={{color: this.state.faved ? 'white' : 'DodgerBlue'}}>{text}</span>
                                 </RaisedButton> 
                             </div>
                     </div>
