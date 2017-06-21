@@ -1,12 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Moment from 'moment';
+import IconToggle from 'react-mdl/lib/IconToggle';
 import HalfStar from 'material-ui/svg-icons/toggle/star-half';
 import Star from 'material-ui/svg-icons/toggle/star';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import OpenInNew from 'material-ui/svg-icons/action/open-in-new';
+
 
 class ResultComponent extends Component {
     constructor(props) {
         super(props);
+        this.handleClick = this.handleClick.bind(this);
         this.renderStars = this.renderStars.bind(this);
+        this.openNewWindow = this.openNewWindow.bind(this);
+    }
+
+    handleClick(event){
+        //Note: this is being called a ton without ever being clicked on!
+        console.log("Click: " + this.props.result.id);
+        console.log(this.props);
+        this.props.addToFavorites(this.props.result.id);
+        
     }
 
     renderStars() {
@@ -30,6 +44,14 @@ class ResultComponent extends Component {
         return stars;
     }
 
+    openNewWindow(){
+        const result = this.props.result;
+        const checkInDateReformat = Moment(this.props.checkInDate).format('MM-DD-YYYY');
+        const checkOutDateReformat = Moment(this.props.checkOutDate).format('MM-DD-YYYY');
+        const hisLink = "https:/www.expedia.com/h" + result.id + ".Hotel-Information?chkin=" + checkInDateReformat + "&chkout=" + checkOutDateReformat + "&rm1=a2";
+        window.open(hisLink, '_blank');
+    }
+
     render() {
         const result = this.props.result;
         const checkInDateReformat = Moment(this.props.checkInDate).format('MM-DD-YYYY');
@@ -38,7 +60,7 @@ class ResultComponent extends Component {
 
         return (
             <div className="result-component">
-                <a href={hisLink} target="_blank">
+                <a>
                     <img className="hotel-image" src={"https://images.trvl-media.com" + result.image.small} />
                     <div className="result-content">
                         <h3>{result.propertyName}</h3>
@@ -49,6 +71,9 @@ class ResultComponent extends Component {
                                     return star;
                                 })}
                             </div>
+                            <FloatingActionButton mini={true} onClick={this.openNewWindow}>
+                            <OpenInNew />
+                            </FloatingActionButton>
                         </span>
                     </div>
                 </a>
@@ -56,5 +81,6 @@ class ResultComponent extends Component {
         )
     }
 }
+//<button type="button" onClick={this.handleClick}>heart</button>
 
 export default ResultComponent

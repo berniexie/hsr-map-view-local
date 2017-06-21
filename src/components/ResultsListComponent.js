@@ -15,7 +15,7 @@ class ResultsListComponent extends Component {
                                 <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)} bottomOffset={275}>
                                     <div className="highlighted-result">
                                         <ListItem>
-                                            <ResultComponent result={result} ref={'result' + result.id} checkInDate={this.props.checkInDate} checkOutDate={this.props.checkOutDate} />
+                                            <ResultComponent addToFavorites={this.props.addToFavorites} result={result} ref={'result' + result.id} checkInDate={this.props.checkInDate} checkOutDate={this.props.checkOutDate} />
                                         </ListItem>
                                         <Divider />
                                     </div>
@@ -26,7 +26,7 @@ class ResultsListComponent extends Component {
                                 <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)  } bottomOffset={275}>
                                     <div className="non-highlighted-result">
                                         <ListItem>
-                                            <ResultComponent result={result} ref={'result' + result.id} checkInDate={this.props.checkInDate} checkOutDate={this.props.checkOutDate} />
+                                            <ResultComponent addToFavorites={this.props.addToFavorites} result={result} ref={'result' + result.id} checkInDate={this.props.checkInDate} checkOutDate={this.props.checkOutDate} />
                                         </ListItem>
                                         <Divider />
                                     </div>

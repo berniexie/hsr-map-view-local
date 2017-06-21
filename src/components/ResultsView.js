@@ -22,13 +22,15 @@ class ResultsView extends Component {
                 bottomRightLat: null,
                 bottomRightLng: null
             },
-            hotelResults: []
+            hotelResults: [],
+            faveHotels: []
         };
         this.calculateMapCenter = this.calculateMapCenter.bind(this);
         this.componentDidUpdate = this.componentDidUpdate.bind(this);
         this.getHotels = this.getHotels.bind(this);
         this.setNewBounds = this.setNewBounds.bind(this);
         this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
+        this.addToFavorites = this.addToFavorites.bind(this);
     }
 
     calculateMapCenter() {
@@ -49,6 +51,11 @@ class ResultsView extends Component {
             });
         });
         return promise;
+    }
+
+    addToFavorites(id){
+    	this.state.faveHotels.push(id);
+    	console.log(this.state);
     }
 
     setNewBounds(bounds) {
