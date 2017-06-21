@@ -114,12 +114,12 @@ class ResultComponent extends Component {
         }
 
         let text = this.state.faved ? '\u2764' : 'Favorite';
-        let priceText = result.price !== '$0' ? result.price + ' per night' : 'Sold Out'; 
+        let priceText = result.price !== '$0' ? result.price + ' per night' : 'Sold Out';
 
         return (
             <div className="result-component">
                 <a>
-                    <img className="hotel-image" style={imgStyle} src={"https://images.trvl-media.com" + result.image.small} />
+                    {(result.image) ? <img className="hotel-image" style={imgStyle} src={"https://images.trvl-media.com" + result.image.small} /> : null }
                     <div className="result-content">
                         <h3 style={headerStyle}>{result.propertyName}</h3>
                         <span className="result-information" style={lineDivStyle}>
