@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import ReactDom from 'react-dom';
 import Moment from 'moment';
-import IconToggle from 'react-mdl/lib/IconToggle';
 import HalfStar from 'material-ui/svg-icons/toggle/star-half';
 import Star from 'material-ui/svg-icons/toggle/star';
 import FloatingActionButton from 'material-ui/FloatingActionButton';

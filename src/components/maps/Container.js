@@ -14,19 +14,11 @@ class Container extends Component {
             highlightedHotel: props.highlightedHotel
         }
         this.goBack = this.goBack.bind(this);
-        this.createMarkerReactComponents = this.createMarkerReactComponents.bind(this);
     }
 
     goBack() {
         this.props.history.push('/');
         // window.location.reload();
-    }
-
-    createMarkerReactComponents() {
-        const markers = this.props.hotelResults.map((pin) => {
-            return <Marker key={pin.id} position={pin.latLong} price={pin.price.replace( /^\D+/g, '')} highlightedHotel={this.props.highlightedHotel} hotelId={pin.id}/>;
-        });
-        return markers;
     }
 
     render() {
@@ -41,7 +33,11 @@ class Container extends Component {
                     <BackAction color="white"/>
                 </FloatingActionButton>
                 <Map google={this.props.google} latLng={this.props.latLng} setNewBounds={this.props.setNewBounds} city={this.props.city}>
-                    {this.createMarkerReactComponents()}
+                    {
+                        this.props.hotelResults.map((pin) => {
+                            return (<Marker key={pin.id} position={pin.latLong} price={pin.id} highlightedHotel={this.props.highlightedHotel} hotelId={pin.id}/>);
+                        })
+                    }
                 </Map>
             </div>
         )
