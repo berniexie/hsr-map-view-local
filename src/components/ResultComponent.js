@@ -4,6 +4,7 @@ import IconToggle from 'react-mdl/lib/IconToggle';
 import HalfStar from 'material-ui/svg-icons/toggle/star-half';
 import Star from 'material-ui/svg-icons/toggle/star';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import BackAction from 'material-ui/svg-icons/hardware/keyboard-backspace';
 import OpenInNew from 'material-ui/svg-icons/action/open-in-new';
 
@@ -11,17 +12,12 @@ import OpenInNew from 'material-ui/svg-icons/action/open-in-new';
 class ResultComponent extends Component {
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this.state = {
+            faved: false
+        };
+        this.favorite = this.favorite.bind(this);
         this.renderStars = this.renderStars.bind(this);
         this.openNewWindow = this.openNewWindow.bind(this);
-    }
-
-    handleClick(event){
-        //Note: this is being called a ton without ever being clicked on!
-        console.log("Click: " + this.props.result.id);
-        console.log(this.props);
-        this.props.addToFavorites(this.props.result.id);
-        
     }
 
     renderStars() {
@@ -53,29 +49,93 @@ class ResultComponent extends Component {
         window.open(hisLink, '_blank');
     }
 
+    favorite(){
+        if (this.state.faved){
+            this.props.removeFromFavorites(this.props.result.id);
+            this.setState({faved: false});
+        }
+        else {
+           this.props.addToFavorites(this.props.result.id);
+            this.setState({faved: true});
+        }
+    }
+
     render() {
         const result = this.props.result;
         const checkInDateReformat = Moment(this.props.checkInDate).format('MM-DD-YYYY');
         const checkOutDateReformat = Moment(this.props.checkOutDate).format('MM-DD-YYYY');
         const hisLink = "https:/www.expedia.com/h" + result.id + ".Hotel-Information?chkin=" + checkInDateReformat + "&chkout=" + checkOutDateReformat + "&rm1=a2";
 
+        let bookButtonStyle = {
+            height: 45,
+            width: 55,
+            fontSize: '16px',
+            position: 'absolute',
+            bottom: 5,
+            right: 15
+        }
+
+        let faveButtonStyle = {
+            height: 45,
+            width: 55,
+            fontSize: '16px',
+            backgroundColor: this.state.faved ? 'pink' : 'white',
+            position: 'absolute',
+            bottom: 55,
+            right: 15
+        }
+
+        let headerStyle = {
+            position: 'absolute',
+            top: -5,
+            left: 10
+        }
+
+        let starDivStyle = {
+            //width: 50,
+            //position: 'relative',
+            //left: -45
+        }
+
+        let lineDivStyle = {
+            width: 150,
+            textAlign: 'center',
+            position: 'absolute',
+            left: 85,
+            top: 45
+        } 
+
+        let imgStyle = {
+            position: 'relative',
+            left: -5,
+            top: 25
+        }
+
+        let text = this.state.faved ? 'Unfavorite' : 'Favorite'; 
+
         return (
             <div className="result-component">
                 <a>
-                    <img className="hotel-image" src={"https://images.trvl-media.com" + result.image.small} />
+                    <img className="hotel-image" style={imgStyle} src={"https://images.trvl-media.com" + result.image.small} />
                     <div className="result-content">
-                        <h3>{result.propertyName}</h3>
-                        <span className="result-information">
+                        <h3 style={headerStyle}>{result.propertyName}</h3>
+                        <span className="result-information" style={lineDivStyle}>
                             <p>{result.price} per night</p>
-                            <div className="star-rating">
+                            <div className="star-rating" style={starDivStyle}>
                                 {this.renderStars().map((star) => {
                                     return star;
                                 })}
                             </div>
-                            <FloatingActionButton mini={true} onClick={this.openNewWindow}>
-                            <OpenInNew />
-                            </FloatingActionButton>
                         </span>
+                        <div className="buttons-div">
+                                <RaisedButton style={bookButtonStyle} onClick={this.openNewWindow}>
+                                Book It
+                                </RaisedButton>
+                                
+                                <RaisedButton style={faveButtonStyle} onClick={this.favorite}>
+                                {text}
+                                </RaisedButton> 
+                            </div>
                     </div>
                 </a>
             </div>

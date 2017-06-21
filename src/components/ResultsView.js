@@ -35,6 +35,7 @@ class ResultsView extends Component {
         this.setNewBounds = this.setNewBounds.bind(this);
         this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
+        this.removeFromFavorites = this.removeFromFavorites.bind(this);
     }
 
     calculateMapCenter() {
@@ -58,7 +59,11 @@ class ResultsView extends Component {
 
     addToFavorites(id){
     	this.state.faveHotels.push(id);
-    	console.log(this.state);
+    }
+
+    removeFromFavorites(id){
+    	const i = this.state.faveHotels.indexOf(id);
+    	this.state.faveHotels.splice(i, 1);
     }
 
     setNewBounds(bounds) {
@@ -144,7 +149,7 @@ class ResultsView extends Component {
                     <BackAction color="white"/>
                 </FloatingActionButton>
                 <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} />
-                <ResultsListComponent addToFavorites={this.addToFavorites} hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
+                <ResultsListComponent addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
             </div>
         )
     }
