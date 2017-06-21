@@ -7,7 +7,7 @@ import Waypoint from 'react-waypoint'
 class ResultsListComponent extends Component {
     render() {
         return (
-        	<List className='results-list-component' style={{padding:0}}>
+        	<List className='results-list-component' style={{padding:0, overflow:'auto'}}>
                 {
                     this.props.hotelResults.map((result) => {
                         if (this.props.highlightedHotel === 0 || this.props.highlightedHotel === result.id) {
@@ -23,8 +23,8 @@ class ResultsListComponent extends Component {
                             )
                         } else {
                             return (
-                                <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)  } bottomOffset={275}>
-                                    <div className="non-highlighted-result">
+                                <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)}  bottomOffset={275}>
+                                    <div onClick={this.props.updateHighlightedHotel.bind(this, result.id)} className="non-highlighted-result">
                                         <ListItem>
                                             <ResultComponent addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} result={result} ref={'result' + result.id} checkInDate={this.props.checkInDate} checkOutDate={this.props.checkOutDate} />
                                         </ListItem>

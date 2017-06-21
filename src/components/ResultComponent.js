@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import ReactDom from 'react-dom';
 import Moment from 'moment';
-import IconToggle from 'react-mdl/lib/IconToggle';
 import HalfStar from 'material-ui/svg-icons/toggle/star-half';
 import Star from 'material-ui/svg-icons/toggle/star';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -122,11 +122,11 @@ class ResultComponent extends Component {
                         </span>
                         <div className="buttons-div">
                                 <RaisedButton style={bookButtonStyle} onClick={this.openNewWindow}>
-                                <span style={{color: this.state.visited ? 'RoyalBlue' : 'DodgerBlue'}}> Book It </span>
+                                <span style={{color: this.state.visited ? 'SlateBlue' : 'RoyalBlue'}}> Book It </span>
                                 </RaisedButton>
                                 
-                                <RaisedButton style={faveButtonStyle} backgroundColor={this.state.faved ? 'DodgerBlue' : 'white'} onClick={this.favorite}>
-                                <span style={{color: this.state.faved ? 'white' : 'DodgerBlue'}}>{text}</span>
+                                <RaisedButton style={faveButtonStyle} backgroundColor={this.state.faved ? 'RoyalBlue' : 'white'} onClick={this.favorite}>
+                                <span style={{color: this.state.faved ? 'white' : 'RoyalBlue'}}>{text}</span>
                                 </RaisedButton> 
                             </div>
                     </div>
