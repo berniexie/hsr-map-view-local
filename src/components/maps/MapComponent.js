@@ -73,7 +73,6 @@ class MapComponent extends Component {
     render() {
         return (
             <div className='map-component' ref='map'>
-                <div className="loading-map"><h2>Loading map</h2></div>
                 {this.renderChildren()}
             </div>
         )
