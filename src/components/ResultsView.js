@@ -80,10 +80,10 @@ class ResultsView extends Component {
     setNewBounds(bounds) {
 	    this.setState({
 	        latLng: {
-	            topLeftLat: bounds.getNorthEast().lat(),
-                topLeftLng: bounds.getNorthEast().lng(),
-                bottomRightLat: bounds.getSouthWest().lat(),
-                bottomRightLng: bounds.getSouthWest().lng()
+	            topRightLat: bounds.getNorthEast().lat(),
+                topRightLng: bounds.getNorthEast().lng(),
+                bottomLeftLat: bounds.getSouthWest().lat(),
+                bottomLeftLng: bounds.getSouthWest().lng()
             }
         });
     }
@@ -107,10 +107,10 @@ class ResultsView extends Component {
             checkin + "/" +
             checkout + "/?" +
             "maxResults=" + 20 +
-            "&top=" + this.state.latLng.topLeftLat +
-            "&right=" + this.state.latLng.topLeftLng +
-            "&bottom=" + this.state.latLng.bottomRightLat +
-            "&left=" + this.state.latLng.bottomRightLng;
+            "&top=" + this.state.latLng.topRightLat +
+            "&right=" + this.state.latLng.topRightLng +
+            "&bottom=" + this.state.latLng.bottomLeftLat +
+            "&left=" + this.state.latLng.bottomLeftLng;
 
         axios({
             method:'get',

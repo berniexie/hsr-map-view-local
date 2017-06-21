@@ -23,6 +23,8 @@ class MapComponent extends Component {
 
     onPanZoom(bounds) {
         this.props.setNewBounds(bounds);
+        
+        
     }
 
     loadMap() {
