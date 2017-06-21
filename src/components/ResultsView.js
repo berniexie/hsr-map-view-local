@@ -23,6 +23,7 @@ class ResultsView extends Component {
                 bottomRightLng: null
             },
             hotelResults: [],
+            bumiResults: [],
             faveHotels: []
         };
         this.calculateMapCenter = this.calculateMapCenter.bind(this);
@@ -32,6 +33,7 @@ class ResultsView extends Component {
         this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
         this.removeFromFavorites = this.removeFromFavorites.bind(this);
+        // this.updateHotelResults = this.updateHotelResults.bind(this);
     }
 
     calculateMapCenter() {
@@ -56,11 +58,17 @@ class ResultsView extends Component {
 
     addToFavorites(id){
     	this.state.faveHotels.push(id);
+    	const i = this.state.hotelResults.indexOf(id);
+    	this.state.hotelResults.splice(i, 1);//remove it
+    	this.state.hotelResults.splice(this.state.faveHotels.length-1,0, id);//add it
+    	// this.updateHotelResults();
+    	this.forceUpdate();
     }
 
     removeFromFavorites(id){
-    	const i = this.state.faveHotels.indexOf(id);
+    	let i = this.state.faveHotels.indexOf(id);
     	this.state.faveHotels.splice(i, 1);
+    	this.updateHotelResults();
     }
 
     setNewBounds(bounds) {
@@ -106,8 +114,33 @@ class ResultsView extends Component {
                 'Client-Token': 'LODGING-PWA'
             }
         }).then((response) => {
-            this.setState({hotelResults: response.data});
+            this.setState({bumiResults: response.data});
+            this.updateHotelResults();
         });
+    }
+
+    updateHotelResults(){
+    	let hotels = new Array();
+    	
+    	for(let i=0; i< this.state.faveHotels.length; i++){
+    		hotels.push(this.state.faveHotels[i]);
+    	}
+    	console.log("added faves");
+    	console.log(this.state);
+    	console.log(hotels);
+
+    	var bumiResults = this.state.bumiResults;
+    	for (let i=0; i < bumiResults.length; i++){
+    		//was this result favorited? If not, add it
+    		if (hotels.indexOf(bumiResults[i]) === -1){
+    			hotels.push(bumiResults[i]);
+    		}
+    	}
+    	this.setState({hotelResults: hotels});
+    	this.forceUpdate();
+    	console.log("added others");
+    	console.log(this.state);
+    	console.log(hotels);
     }
 
     componentDidUpdate(prevProps, prevState) {

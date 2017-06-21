@@ -47,12 +47,13 @@ class ResultComponent extends Component {
     }
 
     favorite(){
+        console.log(this);
         if (this.state.faved){
-            this.props.removeFromFavorites(this.props.result.id);
+            this.props.removeFromFavorites(this.props.result);
             this.setState({faved: false});
         }
         else {
-           this.props.addToFavorites(this.props.result.id);
+           this.props.addToFavorites(this.props.result);
             this.setState({faved: true});
         }
     }
