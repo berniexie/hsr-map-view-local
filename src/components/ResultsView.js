@@ -34,6 +34,7 @@ class ResultsView extends Component {
         this.goBack = this.goBack.bind(this);
         this.setNewBounds = this.setNewBounds.bind(this);
         this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
+        this.addToFavorites = this.addToFavorites.bind(this);
     }
 
     calculateMapCenter() {
@@ -56,7 +57,7 @@ class ResultsView extends Component {
     }
 
     addToFavorites(id){
-    	this.state.faveHotels += id;
+    	this.state.faveHotels.push(id);
     	console.log(this.state);
     }
 

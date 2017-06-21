@@ -3,6 +3,9 @@ import Moment from 'moment';
 import IconToggle from 'react-mdl/lib/IconToggle';
 import HalfStar from 'material-ui/svg-icons/toggle/star-half';
 import Star from 'material-ui/svg-icons/toggle/star';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import BackAction from 'material-ui/svg-icons/hardware/keyboard-backspace';
+import OpenInNew from 'material-ui/svg-icons/action/open-in-new';
 
 
 class ResultComponent extends Component {
@@ -10,6 +13,7 @@ class ResultComponent extends Component {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.renderStars = this.renderStars.bind(this);
+        this.openNewWindow = this.openNewWindow.bind(this);
     }
 
     handleClick(event){
@@ -39,7 +43,14 @@ class ResultComponent extends Component {
             }
         }
         return stars;
->>>>>>> 874fe7bc8fbe0f35bd6d19215019e2b46d89f9ba
+    }
+
+    openNewWindow(){
+        const result = this.props.result;
+        const checkInDateReformat = Moment(this.props.checkInDate).format('MM-DD-YYYY');
+        const checkOutDateReformat = Moment(this.props.checkOutDate).format('MM-DD-YYYY');
+        const hisLink = "https:/www.expedia.com/h" + result.id + ".Hotel-Information?chkin=" + checkInDateReformat + "&chkout=" + checkOutDateReformat + "&rm1=a2";
+        window.open(hisLink, '_blank');
     }
 
     render() {
@@ -50,19 +61,7 @@ class ResultComponent extends Component {
 
         return (
             <div className="result-component">
-// <<<<<<< HEAD
-//                 <img className="hotel-image" src={"https://images.trvl-media.com" + result.image.small} />
-//                 <div className="result-content">
-//                     <h3>{result.propertyName}</h3>
-//                     <span className="result-information">
-//                         <p>price: {result.price}</p>
-//                         <p>stars: {result.star}</p>
-//                         <button type="button" onClick={this.handleClick}>heart</button>
-//                     </span>
-//                     <a href={hisLink} target="_blank" className="more-info">more info</a>
-//                 </div>
-// =======
-                <a href={hisLink} target="_blank">
+                <a>
                     <img className="hotel-image" src={"https://images.trvl-media.com" + result.image.small} />
                     <div className="result-content">
                         <h3>{result.propertyName}</h3>
@@ -73,7 +72,9 @@ class ResultComponent extends Component {
                                     return star;
                                 })}
                             </div>
-                            <button type="button" onClick={this.handleClick}>heart</button>
+                            <FloatingActionButton mini={true} onClick={this.openNewWindow}>
+                            <OpenInNew />
+                            </FloatingActionButton>
                         </span>
                     </div>
                 </a>
@@ -81,5 +82,6 @@ class ResultComponent extends Component {
         )
     }
 }
+//<button type="button" onClick={this.handleClick}>heart</button>
 
 export default ResultComponent
