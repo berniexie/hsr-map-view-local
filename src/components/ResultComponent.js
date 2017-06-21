@@ -3,10 +3,7 @@ import Moment from 'moment';
 import IconToggle from 'react-mdl/lib/IconToggle';
 import HalfStar from 'material-ui/svg-icons/toggle/star-half';
 import Star from 'material-ui/svg-icons/toggle/star';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import BackAction from 'material-ui/svg-icons/hardware/keyboard-backspace';
-import OpenInNew from 'material-ui/svg-icons/action/open-in-new';
 
 
 class ResultComponent extends Component {
@@ -91,12 +88,6 @@ class ResultComponent extends Component {
             left: 10
         }
 
-        let starDivStyle = {
-            //width: 50,
-            //position: 'relative',
-            //left: -45
-        }
-
         let lineDivStyle = {
             width: 150,
             textAlign: 'center',
@@ -121,7 +112,7 @@ class ResultComponent extends Component {
                         <h3 style={headerStyle}>{result.propertyName}</h3>
                         <span className="result-information" style={lineDivStyle}>
                             <p>{result.price} per night</p>
-                            <div className="star-rating" style={starDivStyle}>
+                            <div className="star-rating">
                                 {this.renderStars().map((star) => {
                                     return star;
                                 })}
@@ -142,6 +133,5 @@ class ResultComponent extends Component {
         )
     }
 }
-//<button type="button" onClick={this.handleClick}>heart</button>
 
 export default ResultComponent

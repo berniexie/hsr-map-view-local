@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import {withRouter} from 'react-router-dom';
 import Map from './MapComponent'
 import Marker from './MarkerComponent'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import BackAction from 'material-ui/svg-icons/hardware/keyboard-backspace'
 
 class Container extends Component {
     constructor(props) {
@@ -10,7 +13,13 @@ class Container extends Component {
             hotelPinsGenerated: [],
             highlightedHotel: props.highlightedHotel
         }
+        this.goBack = this.goBack.bind(this);
         this.createMarkerReactComponents = this.createMarkerReactComponents.bind(this);
+    }
+
+    goBack() {
+        this.props.history.push('/');
+        // window.location.reload();
     }
 
     createMarkerReactComponents() {
@@ -21,8 +30,16 @@ class Container extends Component {
     }
 
     render() {
+        var buttonStyle = {
+            position: 'absolute',
+            top: 10,
+            left: 10
+        };
         return (
             <div className='map-container'>
+                <FloatingActionButton className="backButton" mini={true} style={buttonStyle} onClick={this.goBack}>
+                    <BackAction color="white"/>
+                </FloatingActionButton>
                 <Map google={this.props.google} latLng={this.props.latLng} setNewBounds={this.props.setNewBounds} city={this.props.city}>
                     {this.createMarkerReactComponents()}
                 </Map>
@@ -32,5 +49,5 @@ class Container extends Component {
 }
 
 // //this needs to be refactored
-export default Container
+export default withRouter(Container)
 
