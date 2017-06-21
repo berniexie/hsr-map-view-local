@@ -13,11 +13,9 @@ class MarkerComponent extends Component {
     }
 
     componentWillUnmount() {
-        console.log(this.marker);
         if (this.marker) {
             this.marker.setMap(null);
-            this.marker = null;
-            // console.log(this.marker);
+            this.marker.setVisible(false);
         }
     }
 
@@ -36,28 +34,30 @@ class MarkerComponent extends Component {
             position: position
         }
 
-        this.marker = new google.maps.Marker(pref);
-        //
-        // if (this.props.highlightedHotel == this.props.key) {
-        //     this.onMarkerMouseOver(this.marker);
-        // } else {
-        //     this.setMarkerIcon(this.marker);
-        // }
-        // this.marker.addListener('click', (evt) => {
-        //     this.onMarkerClick();
-        // });
-        // this.marker.addListener('mouseover', (evt) => {
-        //     this.onMarkerMouseOver(this.marker);
-        // });
-        // this.marker.addListener('mouseout', (evt) => {
-        //     this.onMarkerMouseOver(this.marker);
-        // })
+        if (!this.marker) {
+            this.marker = new google.maps.Marker(pref);
+        }
+
+        if (this.props.highlightedHotel == this.props.key) {
+            this.onMarkerMouseOver(this.marker);
+        } else {
+            this.setMarkerIcon(this.marker);
+        }
+        this.marker.addListener('click', (evt) => {
+            this.onMarkerClick();
+        });
+        this.marker.addListener('mouseover', (evt) => {
+            this.onMarkerMouseOver(this.marker);
+        });
+        this.marker.addListener('mouseout', (evt) => {
+            this.onMarkerMouseOver(this.marker);
+        })
     }
 
     setMarkerIcon(googleMarker){
         if (this.props.price !== null) {
-            // this.setMarkerIconToBlueBubble(googleMarker);
-            // this.setMarkerLabelPrice(googleMarker);
+            this.setMarkerIconToBlueBubble(googleMarker);
+            this.setMarkerLabelPrice(googleMarker);
         }
     }
 
@@ -139,7 +139,7 @@ class MarkerComponent extends Component {
     }
 
     onMarkerMouseOver(marker) {
-        // this.setInvertedMarkerBubbleColors(marker);
+        this.setInvertedMarkerBubbleColors(marker);
     }
 
     setInvertedMarkerBubbleColors(marker) {
