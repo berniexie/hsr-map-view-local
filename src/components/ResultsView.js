@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import MapContainer from './maps/Container'
-import ResultsListComponent from './ResultsListComponent'
-import GoogleApiComponent from './maps/GoogleApiComponent'
+import React, { Component } from 'react';
+import axios from 'axios';
+import MapContainer from './maps/Container';
+import ResultsListComponent from './ResultsListComponent';
+import GoogleApiComponent from './maps/GoogleApiComponent';
 
 class ResultsView extends Component {
 	constructor(props) {
@@ -23,6 +23,7 @@ class ResultsView extends Component {
                 bottomRightLng: null
             },
             hotelResults: [],
+            bumiResults: [],
             faveHotels: []
         };
         this.calculateMapCenter = this.calculateMapCenter.bind(this);
@@ -31,6 +32,8 @@ class ResultsView extends Component {
         this.setNewBounds = this.setNewBounds.bind(this);
         this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
+        this.removeFromFavorites = this.removeFromFavorites.bind(this);
+        // this.updateHotelResults = this.updateHotelResults.bind(this);
     }
 
     calculateMapCenter() {
@@ -55,7 +58,17 @@ class ResultsView extends Component {
 
     addToFavorites(id){
     	this.state.faveHotels.push(id);
-    	console.log(this.state);
+    	const i = this.state.hotelResults.indexOf(id);
+    	this.state.hotelResults.splice(i, 1);//remove it
+    	this.state.hotelResults.splice(this.state.faveHotels.length-1,0, id);//add it
+    	// this.updateHotelResults();
+    	this.forceUpdate();
+    }
+
+    removeFromFavorites(id){
+    	let i = this.state.faveHotels.indexOf(id);
+    	this.state.faveHotels.splice(i, 1);
+    	this.updateHotelResults();
     }
 
     setNewBounds(bounds) {
@@ -101,8 +114,36 @@ class ResultsView extends Component {
                 'Client-Token': 'LODGING-PWA'
             }
         }).then((response) => {
-            this.setState({hotelResults: response.data});
+            this.setState({bumiResults: response.data});
+            this.updateHotelResults();
         });
+    }
+
+    updateHotelResults(){
+    	let hotels = new Array();
+
+    	for(let i=0; i< this.state.faveHotels.length; i++){
+    		hotels.push(this.state.faveHotels[i]);
+    	}
+    	
+    	var bumiResults = this.state.bumiResults;
+    	for (let i=0; i < bumiResults.length; i++){
+    		//was this result favorited? If not, add it
+    		if (!this.contains(this.state.faveHotels, bumiResults[i])){
+    			hotels.push(bumiResults[i]);
+    		}
+
+    	}
+    	this.setState({hotelResults: hotels});
+    	this.forceUpdate();
+    }
+
+    contains(array, element){
+    	for(let i=0; i<array.length; i++){
+    		if (array[i].id === element.id)
+    			return true;
+    	}
+    	return false;
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -130,7 +171,7 @@ class ResultsView extends Component {
             return (
                 <div className='results-view'>
                     <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} />
-                    <ResultsListComponent hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
+                    <ResultsListComponent addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
                 </div>
             )
         }
