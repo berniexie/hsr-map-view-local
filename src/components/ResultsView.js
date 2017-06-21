@@ -138,8 +138,6 @@ class ResultsView extends Component {
             left: 10
         };
 
-        console.log(this.state.highlightedHotel);
-
         return (
             <div className='results-view'>
                 <FloatingActionButton className="backButton" mini={true} style={buttonStyle} onClick={this.goBack}>

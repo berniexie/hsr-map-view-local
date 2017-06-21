@@ -17,7 +17,7 @@ class ResultsListComponent extends Component {
                     this.props.hotelResults.map((result) => {
                         if (this.props.highlightedHotel == 0 || this.props.highlightedHotel === result.id) {
                             return (
-                                <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)} bottomOffset={300}>
+                                <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)} bottomOffset={275}>
                                     <div className="highlighted-result">
                                         <ListItem>
                                             <ResultComponent addToFavorites={this.props.addToFavorites} result={result} ref={'result' + result.id} checkInDate={this.props.checkInDate} checkOutDate={this.props.checkOutDate} />
@@ -28,7 +28,7 @@ class ResultsListComponent extends Component {
                             )
                         } else {
                             return (
-                                <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)  } bottomOffset={300}>
+                                <Waypoint key={result.id} onEnter={this.props.updateHighlightedHotel.bind(this, result.id)  } bottomOffset={275}>
                                     <div className="non-highlighted-result">
                                         <ListItem>
                                             <ResultComponent addToFavorites={this.props.addToFavorites} result={result} ref={'result' + result.id} checkInDate={this.props.checkInDate} checkOutDate={this.props.checkOutDate} />
