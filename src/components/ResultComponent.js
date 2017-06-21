@@ -66,21 +66,21 @@ class ResultComponent extends Component {
         const hisLink = "https:/www.expedia.com/h" + result.id + ".Hotel-Information?chkin=" + checkInDateReformat + "&chkout=" + checkOutDateReformat + "&rm1=a2";
 
         let bookButtonStyle = {
-            height: 45,
-            width: 60,
+            height: 40,
+            width: 55,
             fontSize: '16px',
             position: 'absolute',
-            bottom: 5,
-            right: 15
+            bottom: 15,
+            right: 25
         }
 
         let faveButtonStyle = {
-            height: 45,
-            width: 60,
+            height: 40,
+            width: 55,
             fontSize: this.state.faved ? '24px' : '16px',
             position: 'absolute',
-            bottom: 55,
-            right: 15
+            bottom: 65,
+            right: 25
         }
 
         let headerStyle = {
@@ -103,7 +103,8 @@ class ResultComponent extends Component {
             top: 25
         }
 
-        let text = this.state.faved ? '\u2764' : 'Favorite'; 
+        let text = this.state.faved ? '\u2764' : 'Favorite';
+        let priceText = result.price !== '$0' ? result.price + ' per night' : 'Sold Out'; 
 
         return (
             <div className="result-component">
@@ -112,7 +113,7 @@ class ResultComponent extends Component {
                     <div className="result-content">
                         <h3 style={headerStyle}>{result.propertyName}</h3>
                         <span className="result-information" style={lineDivStyle}>
-                            <p>{result.price} per night</p>
+                            <p style={{color: priceText==='Sold Out' ? 'red' : 'black'}}> {priceText}</p>
                             <div className="star-rating">
                                 {this.renderStars().map((star) => {
                                     return star;
