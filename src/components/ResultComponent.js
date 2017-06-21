@@ -54,8 +54,11 @@ class ResultComponent extends Component {
             this.setState({faved: false});
         }
         else {
-           this.props.addToFavorites(this.props.result);
-            this.setState({faved: true});
+            const success = this.props.addToFavorites(this.props.result);
+            if (success){
+                this.setState({faved: true});
+           }
+            
         }
     }
 
@@ -85,7 +88,9 @@ class ResultComponent extends Component {
 
         let headerStyle = {
             position: 'absolute',
-            top: -5,
+            fontSize: '16px',
+            textAlign: 'center',
+            top: 0,
             left: 10
         }
 
@@ -103,6 +108,11 @@ class ResultComponent extends Component {
             top: 25
         }
 
+        let priceStyle = {
+            color: priceText==='Sold Out' ? 'red' : 'black',
+            fontSize: '14px'
+        }
+
         let text = this.state.faved ? '\u2764' : 'Favorite';
         let priceText = result.price !== '$0' ? result.price + ' per night' : 'Sold Out'; 
 
@@ -113,7 +123,7 @@ class ResultComponent extends Component {
                     <div className="result-content">
                         <h3 style={headerStyle}>{result.propertyName}</h3>
                         <span className="result-information" style={lineDivStyle}>
-                            <p style={{color: priceText==='Sold Out' ? 'red' : 'black'}}> {priceText}</p>
+                            <p style={priceStyle}> {priceText}</p>
                             <div className="star-rating">
                                 {this.renderStars().map((star) => {
                                     return star;

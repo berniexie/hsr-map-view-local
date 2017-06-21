@@ -57,12 +57,18 @@ class ResultsView extends Component {
     }
 
     addToFavorites(id){
-    	this.state.faveHotels.push(id);
-    	const i = this.state.hotelResults.indexOf(id);
-    	this.state.hotelResults.splice(i, 1);//remove it
-    	this.state.hotelResults.splice(this.state.faveHotels.length-1,0, id);//add it
-    	// this.updateHotelResults();
-    	this.forceUpdate();
+    	if (this.state.faveHotels.length > 2){
+    		alert("Oops! You can only have three favorite hotels at a time. Remove one old favorite to add another");
+    		return false;
+    	} else {
+    		this.state.faveHotels.push(id);
+    		const i = this.state.hotelResults.indexOf(id);
+    		this.state.hotelResults.splice(i, 1);//remove it
+    		this.state.hotelResults.splice(this.state.faveHotels.length-1,0, id);//add it
+    		this.forceUpdate();
+    		return true;
+    	}
+
     }
 
     removeFromFavorites(id){
