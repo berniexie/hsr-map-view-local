@@ -6,6 +6,7 @@ class MapComponent extends Component {
         super(props);
         this.state = {
             region: props.regionName,
+            boundsSet: false,
             currentLocation: ''
         };
         this.loadMap = this.loadMap.bind(this);
@@ -22,7 +23,11 @@ class MapComponent extends Component {
     }
 
     onPanZoom(bounds) {
-        this.props.setNewBounds(bounds);
+        if (!this.state.boundsSet){
+            this.props.setNewBounds(bounds);
+            this.setState({boundsSet: true});
+        }
+        
     }
 
     loadMap() {
