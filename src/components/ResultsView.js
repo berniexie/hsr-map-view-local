@@ -12,6 +12,7 @@ class ResultsView extends Component {
         	    lat: null,
                 lng: null
             },
+            tuid: props.match.params.tuid,
         	cityName: props.match.params.cityName,
             checkInDate: props.match.params.checkInDate,
             checkOutDate: props.match.params.checkOutDate,
@@ -111,7 +112,15 @@ class ResultsView extends Component {
             "&right=" + this.state.latLng.topRightLng +
             "&bottom=" + this.state.latLng.bottomLeftLat +
             "&left=" + this.state.latLng.bottomLeftLng;
-
+        // console.log(siteId);    
+        // console.log(langId);
+        // console.log(guests);
+        // console.log(checkin);
+        // console.log(checkout);
+        // console.log(this.state.latLng.topRightLat);
+        // console.log(this.state.latLng.topRightLng);
+        // console.log(this.state.latLng.bottomLeftLat);
+        // console.log(this.state.latLng.bottomLeftLng);      
         axios({
             method:'get',
             url:bumiUrl,
