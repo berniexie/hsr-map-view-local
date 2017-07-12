@@ -34,7 +34,6 @@ class ResultsView extends Component {
         this.updateHighlightedHotel = this.updateHighlightedHotel.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
         this.removeFromFavorites = this.removeFromFavorites.bind(this);
-        // this.updateHotelResults = this.updateHotelResults.bind(this);
     }
 
     calculateMapCenter() {
@@ -107,20 +106,12 @@ class ResultsView extends Component {
             guests + "/" +
             checkin + "/" +
             checkout + "/?" +
-            "maxResults=" + 20 +
+            // "maxResults=" + 20 +
             "&top=" + this.state.latLng.topRightLat +
             "&right=" + this.state.latLng.topRightLng +
             "&bottom=" + this.state.latLng.bottomLeftLat +
             "&left=" + this.state.latLng.bottomLeftLng;
-        // console.log(siteId);    
-        // console.log(langId);
-        // console.log(guests);
-        // console.log(checkin);
-        // console.log(checkout);
-        // console.log(this.state.latLng.topRightLat);
-        // console.log(this.state.latLng.topRightLng);
-        // console.log(this.state.latLng.bottomLeftLat);
-        // console.log(this.state.latLng.bottomLeftLng);      
+     
         axios({
             method:'get',
             url:bumiUrl,
@@ -142,15 +133,47 @@ class ResultsView extends Component {
     	}
     	
     	var bumiResults = this.state.bumiResults;
-    	for (let i=0; i < bumiResults.length; i++){
-    		//was this result favorited? If not, add it
-    		if (!this.contains(this.state.faveHotels, bumiResults[i])){
-    			hotels.push(bumiResults[i]);
-    		}
+        var bumiHotelsStr = this.makeBumiStr(bumiResults);
+        const crystalballUrl = "http://localhost:8080/" + 
+                                this.state.tuid + "/" +
+                                bumiHotelsStr
 
-    	}
-    	this.setState({hotelResults: hotels});
-    	this.forceUpdate();
+        axios({
+            method:'get',
+            url: crystalballUrl,
+        }).then((response) =>{
+            // console.log(response);
+            var sortedHotels = response.data
+            for (let i=0; i < sortedHotels.length; i++){
+                 let j=0;
+                 while (bumiResults[j].id != sortedHotels[i]){
+                    j++;
+                 }//end while
+                 hotels.push(bumiResults[j]);
+            }//This is the SLOOOOOOOOW way! There's definitely a better way to do it
+            this.setState({hotelResults: hotels});
+            this.forceUpdate();
+        });
+    	// for (let i=0; i < bumiResults.length; i++){
+    	// 	//was this result favorited? If not, add it
+    	// 	if (!this.contains(this.state.faveHotels, bumiResults[i])){
+    	// 		hotels.push(bumiResults[i]);
+    	// 	}
+    	// }
+     //    this.setState({hotelResults: hotels});
+     //    this.forceUpdate();
+
+    }
+
+    makeBumiStr(bumiResults){
+        let bumiHotelsStr = "";
+        for (let i=0; i<bumiResults.length; i++){
+            //Don't send favorites to be sorted
+            if (!this.contains(this.state.faveHotels, bumiResults[i])){
+                bumiHotelsStr += "-" + bumiResults[i].id
+            }//end if
+        }//end for
+        return bumiHotelsStr;
     }
 
     contains(array, element){
