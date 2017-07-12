@@ -5,6 +5,7 @@ import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import Checkbox from 'material-ui/Checkbox';
 import Moment from 'moment';
 
 class NewSearchView extends Component{
@@ -16,6 +17,7 @@ class NewSearchView extends Component{
                 cityName: '',
                 checkInDate: Moment().toDate(),
                 checkOutDate: Moment().add(1, 'days').toDate(),
+                similarUserSearch: false,
                 errorMessage: ''
             },
             searchResults: {}
@@ -24,6 +26,7 @@ class NewSearchView extends Component{
 		this.setCheckInDate = this.setCheckInDate.bind(this);
         this.setCheckOutDate = this.setCheckOutDate.bind(this);
         this.selectUser = this.selectUser.bind(this);
+        this.checkBox = this.checkBox.bind(this);
 	}//end constructor
 
 	handleChange(event) {
@@ -63,9 +66,18 @@ class NewSearchView extends Component{
         });
     }
 
+    checkBox(event){
+        let prevState = this.state.searchCriteria;
+        prevState['similarUserSearch'] = !this.state.searchCriteria.similarUserSearch;
+        this.setState({
+            searchCriteria: prevState
+        });
+    }
+
     search() {
         const criteria = this.state.searchCriteria;
         const tuid = criteria.tuid;
+        const custSearch = criteria.similarUserSearch;
         const cityName = criteria.cityName;
         const checkInDateMoment = Moment(criteria.checkInDate);
         const checkOutDateMoment = Moment(criteria.checkOutDate);
@@ -82,7 +94,7 @@ class NewSearchView extends Component{
         } else {
             const checkInDate = Moment(criteria.checkInDate).format('YYYY-MM-DD');
             const checkOutDate = Moment(criteria.checkOutDate).format('YYYY-MM-DD');
-            const resultsRoute = '/results/' + tuid + '/' + cityName + '/' + checkInDate + '/' + checkOutDate;
+            const resultsRoute = '/results/' + tuid + '/' + cityName + '/' + checkInDate + '/' + checkOutDate + '/' + custSearch;
             this.props.history.push(resultsRoute);
         }
     }
@@ -102,6 +114,7 @@ class NewSearchView extends Component{
                         <TextField className="city-input" floatingLabelText="Enter a City/Region" type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange}/>
                         <DatePicker className="date-picker" hintText="Check In Date" name="checkInDate" value={this.state.searchCriteria.checkInDate} onChange={this.setCheckInDate}/>
                         <DatePicker className="date-picker" hintText="Check Out Date" name="checkOutDate" value={this.state.searchCriteria.checkOutDate} onChange={this.setCheckOutDate}/>
+                        <Checkbox label="See where users like you stayed" onClick={this.checkBox}/>
                         <RaisedButton className="search-button" onClick={() => this.search()}>Search</RaisedButton>
                     </ul>
                 </div>

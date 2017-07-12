@@ -15,7 +15,7 @@ const App = () => (
         <Router>
             <div className="app">
                 <Route exact path="/" component={NewSearchView}/>
-                <Route path="/results/:tuid/:cityName/:checkInDate/:checkOutDate" component={ResultsView}/>
+                <Route path="/results/:tuid/:cityName/:checkInDate/:checkOutDate/:similarUserSearch" component={ResultsView}/>
             </div>
         </Router>
     </MuiThemeProvider>

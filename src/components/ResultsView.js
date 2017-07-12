@@ -16,6 +16,7 @@ class ResultsView extends Component {
         	cityName: props.match.params.cityName,
             checkInDate: props.match.params.checkInDate,
             checkOutDate: props.match.params.checkOutDate,
+            dosimilarUserSearch:props.match.params.similarUserSearch,
             highlightedHotel: 0,
             latLng: {
         	    topLeftLat: null,
@@ -133,41 +134,45 @@ class ResultsView extends Component {
     		hotels.push(this.state.faveHotels[i]);
     	}
 
-
     	
     	var bumiResults = this.state.bumiResults;
-        console.log(bumiResults);
+        // console.log(bumiResults);
         // console.log(this.state.latLng.bottomLeftLat);
         // console.log(this.state.latLng.bottomLeftLng);
-        var bumiHotelsStr = this.makeBumiStr(bumiResults);
-        const crystalballUrl = "http://localhost:8080/" + 
+        if (this.state.dosimilarUserSearch === 'true'){
+            var bumiHotelsStr = this.makeBumiStr(bumiResults);
+            const crystalballUrl = "http://localhost:8080/" + 
                                 this.state.tuid + "/" +
                                 bumiHotelsStr
 
-        axios({
-            method:'get',
-            url: crystalballUrl,
-        }).then((response) =>{
-            // console.log(response);
-            var sortedHotels = response.data
-            for (let i=0; i < sortedHotels.length; i++){
-                 let j=0;
-                 while (bumiResults[j].id != sortedHotels[i]){
-                    j++;
-                 }//end while
-                 hotels.push(bumiResults[j]);
-            }//This is the SLOOOOOOOOW way! There's definitely a better way to do it
+            axios({
+                method:'get',
+                url: crystalballUrl,
+            }).then((response) =>{
+                var sortedHotels = response.data
+                for (let i=0; i < sortedHotels.length; i++){
+                     let j=0;
+                     while (bumiResults[j].id != sortedHotels[i]){
+                        j++;
+                    }//end while
+                    hotels.push(bumiResults[j]);
+                }//This is the SLOOOOOOOOW way! There's definitely a better way to do it
+                this.setState({hotelResults: hotels});
+                this.forceUpdate();
+            });
+        }//end if
+        else {
+            for (let i=0; i < 20 - this.state.faveHotels.length; i++){
+                //was this result favorited? If not, add it
+                if (!this.contains(this.state.faveHotels, bumiResults[i])){
+                    hotels.push(bumiResults[i]);
+                }
+            }
             this.setState({hotelResults: hotels});
             this.forceUpdate();
-        });
-    	// for (let i=0; i < bumiResults.length; i++){
-    	// 	//was this result favorited? If not, add it
-    	// 	if (!this.contains(this.state.faveHotels, bumiResults[i])){
-    	// 		hotels.push(bumiResults[i]);
-    	// 	}
-    	// }
-     //    this.setState({hotelResults: hotels});
-     //    this.forceUpdate();
+        }
+
+  
 
     }
 
