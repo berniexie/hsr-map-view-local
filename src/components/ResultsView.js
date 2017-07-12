@@ -106,11 +106,11 @@ class ResultsView extends Component {
             guests + "/" +
             checkin + "/" +
             checkout + "/?" +
-            // "maxResults=" + 20 +
-            "&top=" + this.state.latLng.topRightLat +
-            "&right=" + this.state.latLng.topRightLng +
-            "&bottom=" + this.state.latLng.bottomLeftLat +
-            "&left=" + this.state.latLng.bottomLeftLng;
+             "maxResults=" + 150 +
+            "&top=" + (this.state.latLng.topRightLat) +
+            "&right=" + (this.state.latLng.topRightLng) +
+            "&bottom=" + (this.state.latLng.bottomLeftLat) +
+            "&left=" + (this.state.latLng.bottomLeftLng);
      
         axios({
             method:'get',
@@ -120,6 +120,7 @@ class ResultsView extends Component {
                 'Client-Token': 'LODGING-PWA'
             }
         }).then((response) => {
+            // console.log(response);
             this.setState({bumiResults: response.data});
             this.updateHotelResults();
         });
@@ -131,8 +132,13 @@ class ResultsView extends Component {
     	for(let i=0; i< this.state.faveHotels.length; i++){
     		hotels.push(this.state.faveHotels[i]);
     	}
+
+
     	
     	var bumiResults = this.state.bumiResults;
+        console.log(bumiResults);
+        // console.log(this.state.latLng.bottomLeftLat);
+        // console.log(this.state.latLng.bottomLeftLng);
         var bumiHotelsStr = this.makeBumiStr(bumiResults);
         const crystalballUrl = "http://localhost:8080/" + 
                                 this.state.tuid + "/" +
