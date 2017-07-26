@@ -38,7 +38,7 @@ class MarkerComponent extends Component {
             this.marker = new google.maps.Marker(pref);
         }
 
-        if (this.props.highlightedHotel == this.props.hotelId) {
+        if (this.props.highlightedHotel === this.props.hotelId) {
             this.onMarkerMouseOver(this.marker);
             this.popMarkerToFront(this.marker);
         } else {
@@ -150,7 +150,7 @@ class MarkerComponent extends Component {
             color: 'white',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
             fontSize: '13px',
-            text: (this.props.price.toString() == "0") ? "Sold Out" : this.props.price.toString()
+            text: (this.props.price.toString() === "0") ? "Sold Out" : this.props.price.toString()
         };
         marker.setLabel(priceLabel);
     }

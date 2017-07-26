@@ -107,11 +107,12 @@ class ResultsView extends Component {
             guests + "/" +
             checkin + "/" +
             checkout + "/?" +
-             "maxResults=" + 150 +
+             "maxResults=" + 200   +
             "&top=" + (this.state.latLng.topRightLat) +
             "&right=" + (this.state.latLng.topRightLng) +
             "&bottom=" + (this.state.latLng.bottomLeftLat) +
             "&left=" + (this.state.latLng.bottomLeftLng);
+
      
         axios({
             method:'get',
@@ -121,7 +122,9 @@ class ResultsView extends Component {
                 'Client-Token': 'LODGING-PWA'
             }
         }).then((response) => {
-            // console.log(response);
+            // for (let i=0; i < response.data.length; i++){
+            //     console.log(response.data[i].id)
+            // }
             this.setState({bumiResults: response.data});
             this.updateHotelResults();
         });
@@ -136,27 +139,21 @@ class ResultsView extends Component {
 
     	
     	var bumiResults = this.state.bumiResults;
-        // console.log(bumiResults);
-        // console.log(this.state.latLng.bottomLeftLat);
-        // console.log(this.state.latLng.bottomLeftLng);
+        var d = new Date();
+        var start = d.getTime();
         if (this.state.dosimilarUserSearch === 'true'){
-            var bumiHotelsStr = this.makeBumiStr(bumiResults);
-            const crystalballUrl = "http://localhost:8080/" + 
-                                this.state.tuid + "/" +
-                                bumiHotelsStr
-
             axios({
-                method:'get',
-                url: crystalballUrl,
+                method:'post',
+                url:"https://localhost:8443/" + this.state.tuid,
+                data: {"hotels":bumiResults},
+                headers: {'Content-Type':'application/json'}
             }).then((response) =>{
-                var sortedHotels = response.data
-                for (let i=0; i < sortedHotels.length; i++){
-                     let j=0;
-                     while (bumiResults[j].id != sortedHotels[i]){
-                        j++;
-                    }//end while
-                    hotels.push(bumiResults[j]);
-                }//This is the SLOOOOOOOOW way! There's definitely a better way to do it
+                var top20 = response.data;
+                for (let i=0; i < top20.length - this.state.faveHotels.length; i++){
+                    if (!this.contains(this.state.faveHotels, top20[i])){
+                        hotels.push(top20[i]);
+                    }//end if
+                }//end for
                 this.setState({hotelResults: hotels});
                 this.forceUpdate();
             });
@@ -216,13 +213,22 @@ class ResultsView extends Component {
     render() {
         if (!this.props.loaded) {
             return <div className="loading-map"><h2>Loading map</h2></div>
-        } else {
+        } 
+        else if (this.state.hotelResults.length === 0){
             return (
                 <div className='results-view'>
-                    <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} />
+                    <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} userid={this.state.tuid}/>
+                    <h3>Loading your hotels...</h3>
+                </div>
+                );    
+        }
+        else {
+            return (
+                <div className='results-view'>
+                    <MapContainer google={this.props.google} hotelResults={this.state.hotelResults} latLng={this.state.centerLatLng} hotelSearch={this.getHotels} setNewBounds={this.setNewBounds} highlightedHotel={this.state.highlightedHotel} userid={this.state.tuid}/>
                     <ResultsListComponent addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} hotelResults={this.state.hotelResults} highlightedHotel={this.state.highlightedHotel} checkInDate={this.state.checkInDate} checkOutDate={this.state.checkOutDate} updateHighlightedHotel={this.updateHighlightedHotel}/>
                 </div>
-            )
+            );
         }
     }
 }

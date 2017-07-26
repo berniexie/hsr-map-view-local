@@ -7,6 +7,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import Moment from 'moment';
+import { Grid, Row, Cell } from 'react-inline-grid';
 
 class NewSearchView extends Component{
 	constructor(){
@@ -100,23 +101,30 @@ class NewSearchView extends Component{
     }
 
 	render(){
+        let checkboxStyle = {
+            margin: 'auto',
+            left: '15%'
+        };
+        let otherStyle = {
+            margin:'auto'
+        }
 		return (
 			<div className="new-search-container">
-				<h1> My new search landing page</h1>
-				<div className="search-bar">
-                    <ul className="search-input">
-                    	<DropDownMenu className="user-id" value={this.state.searchCriteria.tuid} onChange={this.selectUser}>
-                    		<MenuItem value={1} primaryText="Jack - Lower Middle Class Family" />
-                    		<MenuItem value={2} primaryText="John - Lower Middle Class Family" />
-                    		<MenuItem value={3} primaryText="Jane - Upper Middle Class Family" />
-                            <MenuItem value={4} primaryText="Jenna - Luxury Couple" />
+				<h1> Bettercup: A Better Search Experience</h1>
+				<div className="search-bar" style={{justifyContent:'center'}}>
+                    	<DropDownMenu className="user-id" value={this.state.searchCriteria.tuid} style={otherStyle} onChange={this.selectUser}>
+                    		<MenuItem value={1} primaryText="The Budget Family Traveler (Income: $60,000)" />
+                    		<MenuItem value={2} primaryText="The Budget Family Traveler (Income: $40,000)" />
+                    		<MenuItem value={3} primaryText="The Practical Family Traveler (Income: $150,000)" />
+                            <MenuItem value={4} primaryText="The Luxury Couple Traveler (Income: $250,000)" />
                     	</DropDownMenu>
-                        <TextField className="city-input" floatingLabelText="Enter a City/Region" type="text" name="cityName" value={this.state.searchCriteria.cityName} onChange={this.handleChange}/>
-                        <DatePicker className="date-picker" hintText="Check In Date" name="checkInDate" value={this.state.searchCriteria.checkInDate} onChange={this.setCheckInDate}/>
-                        <DatePicker className="date-picker" hintText="Check Out Date" name="checkOutDate" value={this.state.searchCriteria.checkOutDate} onChange={this.setCheckOutDate}/>
-                        <Checkbox label="See where users like you stayed" onClick={this.checkBox}/>
+                        <TextField className="city-input" floatingLabelText="Enter a City/Region" type="text" name="cityName" style={otherStyle} value={this.state.searchCriteria.cityName} onChange={this.handleChange}/>
+                        
+                        <DatePicker className="date-picker" hintText="Check In Date" name="checkInDate" style={otherStyle} value={this.state.searchCriteria.checkInDate} onChange={this.setCheckInDate}/>
+                        
+                        <DatePicker className="date-picker" hintText="Check Out Date" name="checkOutDate" style={otherStyle} value={this.state.searchCriteria.checkOutDate} onChange={this.setCheckOutDate}/>
+                        <Checkbox label="See where users like you stayed" onClick={this.checkBox} style={checkboxStyle}/>
                         <RaisedButton className="search-button" onClick={() => this.search()}>Search</RaisedButton>
-                    </ul>
                 </div>
 			</div>
 			)

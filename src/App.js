@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import SearchView from './components/SearchView'
 import ResultsView from './components/ResultsView'
 import NewSearchView from './components/NewSearchView'
+import HistoryView from './components/HistoryView'
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
@@ -16,6 +17,7 @@ const App = () => (
             <div className="app">
                 <Route exact path="/" component={NewSearchView}/>
                 <Route path="/results/:tuid/:cityName/:checkInDate/:checkOutDate/:similarUserSearch" component={ResultsView}/>
+                <Route path="/history/:tuid" component={HistoryView}/>
             </div>
         </Router>
     </MuiThemeProvider>
